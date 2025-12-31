@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ott-frontend
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ott-frontend
+  template:
+    metadata:
+      labels:
+        app: ott-frontend
+    spec:
+      containers:
+      - name: frontend
+        image: ott-frontend-web:latest
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ott-frontend-service
+  namespace: default
+spec:
+  type: LoadBalancer
+  selector:
+    app: ott-frontend
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
