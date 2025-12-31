@@ -1,0 +1,79 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:14-alpine
+    container_name: ott-postgres
+    environment:
+      POSTGRES_DB: ottdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - ott-network
+
+  dynamodb-local:
+    image: amazon/dynamodb-local:latest
+    container_name: ott-dynamodb
+    command: "-jar DynamoDBLocal.jar -sharedDb -dbPath ./data"
+    ports:
+      - "8000:8000"
+    volumes:
+      - dynamodb-data:/home/dynamodblocal/data
+    networks:
+      - ott-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: ott-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - ott-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ott-backend
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/ottdb
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: password
+      REDIS_HOST: redis
+      AWS_DYNAMODB_ENDPOINT: http://dynamodb-local:8000
+      AWS_REGION: us-east-1
+      AWS_ACCESS_KEY_ID: local
+      AWS_SECRET_ACCESS_KEY: local
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+      - redis
+      - dynamodb-local
+    networks:
+      - ott-network
+
+  frontend-web:
+    build:
+      context: ./frontend-web
+      dockerfile: Dockerfile
+    container_name: ott-frontend-web
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - ott-network
+
+volumes:
+  postgres-data:
+  dynamodb-data:
+
+networks:
+  ott-network:
+    driver: bridge
