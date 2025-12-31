@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ottdb_dev
+  
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+aws:
+  dynamodb:
+    endpoint: http://localhost:8000
+
+logging:
+  level:
+    com.ott: DEBUG
+    org.springframework.web: DEBUG
