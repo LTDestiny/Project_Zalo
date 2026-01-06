@@ -1,11 +1,13 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/ottdb_dev
-  
+    url: jdbc:postgresql://localhost:5432/ottdb
+    username: postgres
+    password: admin
+
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
 
 aws:
   dynamodb:

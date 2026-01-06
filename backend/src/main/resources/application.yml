@@ -1,14 +1,14 @@
 spring:
   application:
     name: ott-platform
-  
+
   profiles:
     active: ${SPRING_PROFILES_ACTIVE:dev}
-  
+
   datasource:
     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/ottdb}
     username: ${SPRING_DATASOURCE_USERNAME:postgres}
-    password: ${SPRING_DATASOURCE_PASSWORD:password}
+    password: ${SPRING_DATASOURCE_PASSWORD:admin}
     driver-class-name: org.postgresql.Driver
     hikari:
       maximum-pool-size: 20
@@ -16,7 +16,7 @@ spring:
       connection-timeout: 30000
       idle-timeout: 600000
       max-lifetime: 1800000
-  
+
   jpa:
     hibernate:
       ddl-auto: validate
@@ -26,14 +26,14 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
         default_schema: public
-  
+
   data:
     redis:
       host: ${REDIS_HOST:localhost}
       port: ${REDIS_PORT:6379}
       password: ${REDIS_PASSWORD:}
       timeout: 60000
-  
+
   flyway:
     enabled: true
     locations: classpath:db/migration
@@ -54,7 +54,7 @@ aws:
 
 # JWT Configuration
 jwt:
-  secret: ${JWT_SECRET:YourSuperSecretKeyThatIsAtLeast256BitsLongForHS512Algorithm}
+  secret: ${JWT_SECRET:OttPlatformSecretKeyForJWTTokenGenerationAndValidation2024}
   expiration-ms: ${JWT_EXPIRATION_MS:86400000}
 
 # Server Configuration
