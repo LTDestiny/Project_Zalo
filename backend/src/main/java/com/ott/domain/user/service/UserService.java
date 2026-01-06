@@ -1,6 +1,7 @@
 package com.ott.domain.user.service;
 
 import com.ott.domain.common.enums.UserStatus;
+import com.ott.domain.user.dto.UpdateProfileRequest;
 import com.ott.domain.user.dto.UserDto;
 import com.ott.domain.user.entity.User;
 import com.ott.domain.user.repository.UserRepository;
@@ -70,6 +71,48 @@ public class UserService {
                 .collect(Collectors.toList());
     }
     
+    public List<UserDto> searchUsers(String query) {
+        return userRepository.searchUsers(query).stream()
+                .map(this::mapToDto)
+                .collect(Collectors.toList());
+    }
+    
+    public List<UserDto> findByStatus(UserStatus status) {
+        return userRepository.findByStatus(status).stream()
+                .map(this::mapToDto)
+                .collect(Collectors.toList());
+    }
+    
+    @CacheEvict(value = "users", key = "#id")
+    public UserDto updateUserProfile(UUID id, UpdateProfileRequest request) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
+        
+        if (request.getUsername() != null && !request.getUsername().equals(user.getUsername())) {
+            if (userRepository.existsByUsername(request.getUsername())) {
+                throw new IllegalArgumentException("Username already exists");
+            }
+            user.setUsername(request.getUsername());
+        }
+        
+        if (request.getEmail() != null && !request.getEmail().equals(user.getEmail())) {
+            if (userRepository.existsByEmail(request.getEmail())) {
+                throw new IllegalArgumentException("Email already exists");
+            }
+            user.setEmail(request.getEmail());
+        }
+        
+        if (request.getPhoneNumber() != null) {
+            user.setPhoneNumber(request.getPhoneNumber());
+        }
+        
+        if (request.getAvatarUrl() != null) {
+            user.setAvatarUrl(request.getAvatarUrl());
+        }
+        
+        return mapToDto(userRepository.save(user));
+    }
+    
     private UserDto mapToDto(User user) {
         return UserDto.builder()
                 .id(user.getId())
@@ -78,6 +121,7 @@ public class UserService {
                 .phoneNumber(user.getPhoneNumber())
                 .avatarUrl(user.getAvatarUrl())
                 .status(user.getStatus())
+                .role(user.getRole())
                 .createdAt(user.getCreatedAt())
                 .lastSeen(user.getLastSeen())
                 .build();

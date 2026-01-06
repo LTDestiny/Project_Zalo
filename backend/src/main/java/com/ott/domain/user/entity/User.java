@@ -1,5 +1,6 @@
 package com.ott.domain.user.entity;
 
+import com.ott.domain.common.enums.UserRole;
 import com.ott.domain.common.enums.UserStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -43,6 +44,11 @@ public class User {
     @Column(length = 20)
     @Builder.Default
     private UserStatus status = UserStatus.OFFLINE;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20)
+    @Builder.Default
+    private UserRole role = UserRole.USER;
     
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
