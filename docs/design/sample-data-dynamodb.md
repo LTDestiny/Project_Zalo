@@ -5,6 +5,7 @@
 Dữ liệu này dùng để import vào DynamoDB cho testing. Bạn có thể dùng AWS CLI hoặc SDK để import.
 
 ### Import bằng AWS CLI (batch-write-item):
+
 ```bash
 aws dynamodb batch-write-item --request-items file://dynamodb-conversations-data.json
 aws dynamodb batch-write-item --request-items file://dynamodb-messages-data.json
@@ -401,352 +402,418 @@ aws dynamodb batch-write-item --request-items file://dynamodb-notifications-data
     {
       "PutRequest": {
         "Item": {
-          "message_id": {"S": "msg-001-001"},
-          "conversation_id": {"S": "conv-direct-user22-user33"},
-          "sender_id": {"S": "22222222-2222-2222-2222-222222222222"},
-          "type": {"S": "TEXT"},
-          "content": {"S": "Chào bạn! Bạn khỏe không?"},
-          "timestamp": {"N": "1704106800000"},
-          "status": {"S": "READ"},
-          "read_by": {"L": [
-            {"S": "22222222-2222-2222-2222-222222222222"},
-            {"S": "33333333-3333-3333-3333-333333333333"}
-          ]}
+          "message_id": { "S": "msg-001-001" },
+          "conversation_id": { "S": "conv-direct-user22-user33" },
+          "sender_id": { "S": "22222222-2222-2222-2222-222222222222" },
+          "type": { "S": "TEXT" },
+          "content": { "S": "Chào bạn! Bạn khỏe không?" },
+          "timestamp": { "N": "1704106800000" },
+          "status": { "S": "READ" },
+          "read_by": {
+            "L": [
+              { "S": "22222222-2222-2222-2222-222222222222" },
+              { "S": "33333333-3333-3333-3333-333333333333" }
+            ]
+          }
         }
       }
     },
     {
       "PutRequest": {
         "Item": {
-          "message_id": {"S": "msg-001-002"},
-          "conversation_id": {"S": "conv-direct-user22-user33"},
-          "sender_id": {"S": "33333333-3333-3333-3333-333333333333"},
-          "type": {"S": "TEXT"},
-          "content": {"S": "Chào bạn! Mình khỏe, còn bạn?"},
-          "timestamp": {"N": "1704106860000"},
-          "status": {"S": "READ"},
-          "read_by": {"L": [
-            {"S": "22222222-2222-2222-2222-222222222222"},
-            {"S": "33333333-3333-3333-3333-333333333333"}
-          ]}
+          "message_id": { "S": "msg-001-002" },
+          "conversation_id": { "S": "conv-direct-user22-user33" },
+          "sender_id": { "S": "33333333-3333-3333-3333-333333333333" },
+          "type": { "S": "TEXT" },
+          "content": { "S": "Chào bạn! Mình khỏe, còn bạn?" },
+          "timestamp": { "N": "1704106860000" },
+          "status": { "S": "READ" },
+          "read_by": {
+            "L": [
+              { "S": "22222222-2222-2222-2222-222222222222" },
+              { "S": "33333333-3333-3333-3333-333333333333" }
+            ]
+          }
         }
       }
     },
     {
       "PutRequest": {
         "Item": {
-          "message_id": {"S": "msg-001-003"},
-          "conversation_id": {"S": "conv-direct-user22-user33"},
-          "sender_id": {"S": "22222222-2222-2222-2222-222222222222"},
-          "type": {"S": "TEXT"},
-          "content": {"S": "Mình cũng tốt. Cuối tuần này có rảnh không?"},
-          "timestamp": {"N": "1704107400000"},
-          "status": {"S": "READ"},
-          "read_by": {"L": [
-            {"S": "22222222-2222-2222-2222-222222222222"},
-            {"S": "33333333-3333-3333-3333-333333333333"}
-          ]}
+          "message_id": { "S": "msg-001-003" },
+          "conversation_id": { "S": "conv-direct-user22-user33" },
+          "sender_id": { "S": "22222222-2222-2222-2222-222222222222" },
+          "type": { "S": "TEXT" },
+          "content": { "S": "Mình cũng tốt. Cuối tuần này có rảnh không?" },
+          "timestamp": { "N": "1704107400000" },
+          "status": { "S": "READ" },
+          "read_by": {
+            "L": [
+              { "S": "22222222-2222-2222-2222-222222222222" },
+              { "S": "33333333-3333-3333-3333-333333333333" }
+            ]
+          }
         }
       }
     },
     {
       "PutRequest": {
         "Item": {
-          "message_id": {"S": "msg-001-004"},
-          "conversation_id": {"S": "conv-direct-user22-user33"},
-          "sender_id": {"S": "33333333-3333-3333-3333-333333333333"},
-          "type": {"S": "TEXT"},
-          "content": {"S": "Có đó, bạn có kế hoạch gì không?"},
-          "timestamp": {"N": "1704108000000"},
-          "status": {"S": "READ"},
-          "read_by": {"L": [
-            {"S": "22222222-2222-2222-2222-222222222222"},
-            {"S": "33333333-3333-3333-3333-333333333333"}
-          ]}
+          "message_id": { "S": "msg-001-004" },
+          "conversation_id": { "S": "conv-direct-user22-user33" },
+          "sender_id": { "S": "33333333-3333-3333-3333-333333333333" },
+          "type": { "S": "TEXT" },
+          "content": { "S": "Có đó, bạn có kế hoạch gì không?" },
+          "timestamp": { "N": "1704108000000" },
+          "status": { "S": "READ" },
+          "read_by": {
+            "L": [
+              { "S": "22222222-2222-2222-2222-222222222222" },
+              { "S": "33333333-3333-3333-3333-333333333333" }
+            ]
+          }
         }
       }
     },
     {
       "PutRequest": {
         "Item": {
-          "message_id": {"S": "msg-001-005"},
-          "conversation_id": {"S": "conv-direct-user22-user33"},
-          "sender_id": {"S": "22222222-2222-2222-2222-222222222222"},
-          "type": {"S": "TEXT"},
-          "content": {"S": "Mình định đi xem phim, bạn có muốn đi cùng không?"},
-          "timestamp": {"N": "1704109200000"},
-          "status": {"S": "READ"},
-          "read_by": {"L": [
-            {"S": "22222222-2222-2222-2222-222222222222"},
-            {"S": "33333333-3333-3333-3333-333333333333"}
-          ]}
+          "message_id": { "S": "msg-001-005" },
+          "conversation_id": { "S": "conv-direct-user22-user33" },
+          "sender_id": { "S": "22222222-2222-2222-2222-222222222222" },
+          "type": { "S": "TEXT" },
+          "content": {
+            "S": "Mình định đi xem phim, bạn có muốn đi cùng không?"
+          },
+          "timestamp": { "N": "1704109200000" },
+          "status": { "S": "READ" },
+          "read_by": {
+            "L": [
+              { "S": "22222222-2222-2222-2222-222222222222" },
+              { "S": "33333333-3333-3333-3333-333333333333" }
+            ]
+          }
         }
       }
     },
     {
       "PutRequest": {
         "Item": {
-          "message_id": {"S": "msg-001-006"},
-          "conversation_id": {"S": "conv-direct-user22-user33"},
-          "sender_id": {"S": "33333333-3333-3333-3333-333333333333"},
-          "type": {"S": "TEXT"},
-          "content": {"S": "Được nhé! Xem phim gì thế?"},
-          "timestamp": {"N": "1704110400000"},
-          "status": {"S": "READ"},
-          "read_by": {"L": [
-            {"S": "22222222-2222-2222-2222-222222222222"},
-            {"S": "33333333-3333-3333-3333-333333333333"}
-          ]}
+          "message_id": { "S": "msg-001-006" },
+          "conversation_id": { "S": "conv-direct-user22-user33" },
+          "sender_id": { "S": "33333333-3333-3333-3333-333333333333" },
+          "type": { "S": "TEXT" },
+          "content": { "S": "Được nhé! Xem phim gì thế?" },
+          "timestamp": { "N": "1704110400000" },
+          "status": { "S": "READ" },
+          "read_by": {
+            "L": [
+              { "S": "22222222-2222-2222-2222-222222222222" },
+              { "S": "33333333-3333-3333-3333-333333333333" }
+            ]
+          }
         }
       }
     },
     {
       "PutRequest": {
         "Item": {
-          "message_id": {"S": "msg-001-007"},
-          "conversation_id": {"S": "conv-direct-user22-user33"},
-          "sender_id": {"S": "22222222-2222-2222-2222-222222222222"},
-          "type": {"S": "TEXT"},
-          "content": {"S": "Phim bom tấn mới ra rạp á, nghe nói hay lắm"},
-          "timestamp": {"N": "1704193200000"},
-          "status": {"S": "READ"},
-          "read_by": {"L": [
-            {"S": "22222222-2222-2222-2222-222222222222"},
-            {"S": "33333333-3333-3333-3333-333333333333"}
-          ]}
+          "message_id": { "S": "msg-001-007" },
+          "conversation_id": { "S": "conv-direct-user22-user33" },
+          "sender_id": { "S": "22222222-2222-2222-2222-222222222222" },
+          "type": { "S": "TEXT" },
+          "content": { "S": "Phim bom tấn mới ra rạp á, nghe nói hay lắm" },
+          "timestamp": { "N": "1704193200000" },
+          "status": { "S": "READ" },
+          "read_by": {
+            "L": [
+              { "S": "22222222-2222-2222-2222-222222222222" },
+              { "S": "33333333-3333-3333-3333-333333333333" }
+            ]
+          }
         }
       }
     },
     {
       "PutRequest": {
         "Item": {
-          "message_id": {"S": "msg-001-008"},
-          "conversation_id": {"S": "conv-direct-user22-user33"},
-          "sender_id": {"S": "33333333-3333-3333-3333-333333333333"},
-          "type": {"S": "IMAGE"},
-          "content": {"S": "Check poster này xem"},
-          "media_url": {"S": "https://storage.example.com/images/movie-poster-001.jpg"},
-          "timestamp": {"N": "1704280800000"},
-          "status": {"S": "READ"},
-          "read_by": {"L": [
-            {"S": "22222222-2222-2222-2222-222222222222"},
-            {"S": "33333333-3333-3333-3333-333333333333"}
-          ]}
+          "message_id": { "S": "msg-001-008" },
+          "conversation_id": { "S": "conv-direct-user22-user33" },
+          "sender_id": { "S": "33333333-3333-3333-3333-333333333333" },
+          "type": { "S": "IMAGE" },
+          "content": { "S": "Check poster này xem" },
+          "media_url": {
+            "S": "https://storage.example.com/images/movie-poster-001.jpg"
+          },
+          "timestamp": { "N": "1704280800000" },
+          "status": { "S": "READ" },
+          "read_by": {
+            "L": [
+              { "S": "22222222-2222-2222-2222-222222222222" },
+              { "S": "33333333-3333-3333-3333-333333333333" }
+            ]
+          }
         }
       }
     },
     {
       "PutRequest": {
         "Item": {
-          "message_id": {"S": "msg-001-009"},
-          "conversation_id": {"S": "conv-direct-user22-user33"},
-          "sender_id": {"S": "22222222-2222-2222-2222-222222222222"},
-          "type": {"S": "TEXT"},
-          "content": {"S": "Wow nhìn có vẻ hay đó! Chủ nhật lúc 2h được không?"},
-          "timestamp": {"N": "1704368400000"},
-          "status": {"S": "READ"},
-          "read_by": {"L": [
-            {"S": "22222222-2222-2222-2222-222222222222"},
-            {"S": "33333333-3333-3333-3333-333333333333"}
-          ]}
+          "message_id": { "S": "msg-001-009" },
+          "conversation_id": { "S": "conv-direct-user22-user33" },
+          "sender_id": { "S": "22222222-2222-2222-2222-222222222222" },
+          "type": { "S": "TEXT" },
+          "content": {
+            "S": "Wow nhìn có vẻ hay đó! Chủ nhật lúc 2h được không?"
+          },
+          "timestamp": { "N": "1704368400000" },
+          "status": { "S": "READ" },
+          "read_by": {
+            "L": [
+              { "S": "22222222-2222-2222-2222-222222222222" },
+              { "S": "33333333-3333-3333-3333-333333333333" }
+            ]
+          }
         }
       }
     },
     {
       "PutRequest": {
         "Item": {
-          "message_id": {"S": "msg-001-010"},
-          "conversation_id": {"S": "conv-direct-user22-user33"},
-          "sender_id": {"S": "33333333-3333-3333-3333-333333333333"},
-          "type": {"S": "TEXT"},
-          "content": {"S": "Hẹn gặp lại nhé!"},
-          "timestamp": {"N": "1704441600000"},
-          "status": {"S": "DELIVERED"},
-          "read_by": {"L": [
-            {"S": "22222222-2222-2222-2222-222222222222"}
-          ]}
+          "message_id": { "S": "msg-001-010" },
+          "conversation_id": { "S": "conv-direct-user22-user33" },
+          "sender_id": { "S": "33333333-3333-3333-3333-333333333333" },
+          "type": { "S": "TEXT" },
+          "content": { "S": "Hẹn gặp lại nhé!" },
+          "timestamp": { "N": "1704441600000" },
+          "status": { "S": "DELIVERED" },
+          "read_by": { "L": [{ "S": "22222222-2222-2222-2222-222222222222" }] }
         }
       }
     },
     {
       "PutRequest": {
         "Item": {
-          "message_id": {"S": "msg-g1-001"},
-          "conversation_id": {"S": "conv-group-g1111111-1111-1111-1111-111111111111"},
-          "sender_id": {"S": "22222222-2222-2222-2222-222222222222"},
-          "type": {"S": "SYSTEM"},
-          "content": {"S": "Nguyễn Văn A đã tạo nhóm 'Gia đình nhỏ'"},
-          "timestamp": {"N": "1704169200000"},
-          "status": {"S": "SENT"},
-          "read_by": {"L": []}
+          "message_id": { "S": "msg-g1-001" },
+          "conversation_id": {
+            "S": "conv-group-g1111111-1111-1111-1111-111111111111"
+          },
+          "sender_id": { "S": "22222222-2222-2222-2222-222222222222" },
+          "type": { "S": "SYSTEM" },
+          "content": { "S": "Nguyễn Văn A đã tạo nhóm 'Gia đình nhỏ'" },
+          "timestamp": { "N": "1704169200000" },
+          "status": { "S": "SENT" },
+          "read_by": { "L": [] }
         }
       }
     },
     {
       "PutRequest": {
         "Item": {
-          "message_id": {"S": "msg-g1-002"},
-          "conversation_id": {"S": "conv-group-g1111111-1111-1111-1111-111111111111"},
-          "sender_id": {"S": "33333333-3333-3333-3333-333333333333"},
-          "type": {"S": "SYSTEM"},
-          "content": {"S": "Trần Thị B đã tham gia nhóm"},
-          "timestamp": {"N": "1704169500000"},
-          "status": {"S": "SENT"},
-          "read_by": {"L": []}
+          "message_id": { "S": "msg-g1-002" },
+          "conversation_id": {
+            "S": "conv-group-g1111111-1111-1111-1111-111111111111"
+          },
+          "sender_id": { "S": "33333333-3333-3333-3333-333333333333" },
+          "type": { "S": "SYSTEM" },
+          "content": { "S": "Trần Thị B đã tham gia nhóm" },
+          "timestamp": { "N": "1704169500000" },
+          "status": { "S": "SENT" },
+          "read_by": { "L": [] }
         }
       }
     },
     {
       "PutRequest": {
         "Item": {
-          "message_id": {"S": "msg-g1-003"},
-          "conversation_id": {"S": "conv-group-g1111111-1111-1111-1111-111111111111"},
-          "sender_id": {"S": "22222222-2222-2222-2222-222222222222"},
-          "type": {"S": "TEXT"},
-          "content": {"S": "Chào mọi người! Nhóm này để chúng ta liên lạc với nhau nhé"},
-          "timestamp": {"N": "1704170000000"},
-          "status": {"S": "READ"},
-          "read_by": {"L": [
-            {"S": "22222222-2222-2222-2222-222222222222"},
-            {"S": "33333333-3333-3333-3333-333333333333"},
-            {"S": "55555555-5555-5555-5555-555555555555"}
-          ]}
+          "message_id": { "S": "msg-g1-003" },
+          "conversation_id": {
+            "S": "conv-group-g1111111-1111-1111-1111-111111111111"
+          },
+          "sender_id": { "S": "22222222-2222-2222-2222-222222222222" },
+          "type": { "S": "TEXT" },
+          "content": {
+            "S": "Chào mọi người! Nhóm này để chúng ta liên lạc với nhau nhé"
+          },
+          "timestamp": { "N": "1704170000000" },
+          "status": { "S": "READ" },
+          "read_by": {
+            "L": [
+              { "S": "22222222-2222-2222-2222-222222222222" },
+              { "S": "33333333-3333-3333-3333-333333333333" },
+              { "S": "55555555-5555-5555-5555-555555555555" }
+            ]
+          }
         }
       }
     },
     {
       "PutRequest": {
         "Item": {
-          "message_id": {"S": "msg-g1-004"},
-          "conversation_id": {"S": "conv-group-g1111111-1111-1111-1111-111111111111"},
-          "sender_id": {"S": "33333333-3333-3333-3333-333333333333"},
-          "type": {"S": "TEXT"},
-          "content": {"S": "Ok nhé, cảm ơn anh!"},
-          "timestamp": {"N": "1704172800000"},
-          "status": {"S": "READ"},
-          "read_by": {"L": [
-            {"S": "22222222-2222-2222-2222-222222222222"},
-            {"S": "33333333-3333-3333-3333-333333333333"}
-          ]}
+          "message_id": { "S": "msg-g1-004" },
+          "conversation_id": {
+            "S": "conv-group-g1111111-1111-1111-1111-111111111111"
+          },
+          "sender_id": { "S": "33333333-3333-3333-3333-333333333333" },
+          "type": { "S": "TEXT" },
+          "content": { "S": "Ok nhé, cảm ơn anh!" },
+          "timestamp": { "N": "1704172800000" },
+          "status": { "S": "READ" },
+          "read_by": {
+            "L": [
+              { "S": "22222222-2222-2222-2222-222222222222" },
+              { "S": "33333333-3333-3333-3333-333333333333" }
+            ]
+          }
         }
       }
     },
     {
       "PutRequest": {
         "Item": {
-          "message_id": {"S": "msg-g1-005"},
-          "conversation_id": {"S": "conv-group-g1111111-1111-1111-1111-111111111111"},
-          "sender_id": {"S": "55555555-5555-5555-5555-555555555555"},
-          "type": {"S": "TEXT"},
-          "content": {"S": "Cuối tuần này mọi người có rảnh không? Mình tổ chức tụ họp nhé"},
-          "timestamp": {"N": "1704279600000"},
-          "status": {"S": "READ"},
-          "read_by": {"L": [
-            {"S": "22222222-2222-2222-2222-222222222222"},
-            {"S": "33333333-3333-3333-3333-333333333333"},
-            {"S": "55555555-5555-5555-5555-555555555555"}
-          ]}
+          "message_id": { "S": "msg-g1-005" },
+          "conversation_id": {
+            "S": "conv-group-g1111111-1111-1111-1111-111111111111"
+          },
+          "sender_id": { "S": "55555555-5555-5555-5555-555555555555" },
+          "type": { "S": "TEXT" },
+          "content": {
+            "S": "Cuối tuần này mọi người có rảnh không? Mình tổ chức tụ họp nhé"
+          },
+          "timestamp": { "N": "1704279600000" },
+          "status": { "S": "READ" },
+          "read_by": {
+            "L": [
+              { "S": "22222222-2222-2222-2222-222222222222" },
+              { "S": "33333333-3333-3333-3333-333333333333" },
+              { "S": "55555555-5555-5555-5555-555555555555" }
+            ]
+          }
         }
       }
     },
     {
       "PutRequest": {
         "Item": {
-          "message_id": {"S": "msg-g1-020"},
-          "conversation_id": {"S": "conv-group-g1111111-1111-1111-1111-111111111111"},
-          "sender_id": {"S": "22222222-2222-2222-2222-222222222222"},
-          "type": {"S": "TEXT"},
-          "content": {"S": "Tối nay ăn gì nhỉ?"},
-          "timestamp": {"N": "1704441600000"},
-          "status": {"S": "DELIVERED"},
-          "read_by": {"L": [
-            {"S": "22222222-2222-2222-2222-222222222222"},
-            {"S": "55555555-5555-5555-5555-555555555555"}
-          ]}
+          "message_id": { "S": "msg-g1-020" },
+          "conversation_id": {
+            "S": "conv-group-g1111111-1111-1111-1111-111111111111"
+          },
+          "sender_id": { "S": "22222222-2222-2222-2222-222222222222" },
+          "type": { "S": "TEXT" },
+          "content": { "S": "Tối nay ăn gì nhỉ?" },
+          "timestamp": { "N": "1704441600000" },
+          "status": { "S": "DELIVERED" },
+          "read_by": {
+            "L": [
+              { "S": "22222222-2222-2222-2222-222222222222" },
+              { "S": "55555555-5555-5555-5555-555555555555" }
+            ]
+          }
         }
       }
     },
     {
       "PutRequest": {
         "Item": {
-          "message_id": {"S": "msg-g2-001"},
-          "conversation_id": {"S": "conv-group-g2222222-2222-2222-2222-222222222222"},
-          "sender_id": {"S": "33333333-3333-3333-3333-333333333333"},
-          "type": {"S": "SYSTEM"},
-          "content": {"S": "Trần Thị B đã tạo nhóm 'Team Dev IUH'"},
-          "timestamp": {"N": "1704193200000"},
-          "status": {"S": "SENT"},
-          "read_by": {"L": []}
+          "message_id": { "S": "msg-g2-001" },
+          "conversation_id": {
+            "S": "conv-group-g2222222-2222-2222-2222-222222222222"
+          },
+          "sender_id": { "S": "33333333-3333-3333-3333-333333333333" },
+          "type": { "S": "SYSTEM" },
+          "content": { "S": "Trần Thị B đã tạo nhóm 'Team Dev IUH'" },
+          "timestamp": { "N": "1704193200000" },
+          "status": { "S": "SENT" },
+          "read_by": { "L": [] }
         }
       }
     },
     {
       "PutRequest": {
         "Item": {
-          "message_id": {"S": "msg-g2-002"},
-          "conversation_id": {"S": "conv-group-g2222222-2222-2222-2222-222222222222"},
-          "sender_id": {"S": "33333333-3333-3333-3333-333333333333"},
-          "type": {"S": "TEXT"},
-          "content": {"S": "Chào các bạn! Nhóm này để mình làm project CNM nhé"},
-          "timestamp": {"N": "1704193500000"},
-          "status": {"S": "READ"},
-          "read_by": {"L": [
-            {"S": "33333333-3333-3333-3333-333333333333"},
-            {"S": "22222222-2222-2222-2222-222222222222"},
-            {"S": "11111111-1111-1111-1111-111111111111"}
-          ]}
+          "message_id": { "S": "msg-g2-002" },
+          "conversation_id": {
+            "S": "conv-group-g2222222-2222-2222-2222-222222222222"
+          },
+          "sender_id": { "S": "33333333-3333-3333-3333-333333333333" },
+          "type": { "S": "TEXT" },
+          "content": {
+            "S": "Chào các bạn! Nhóm này để mình làm project CNM nhé"
+          },
+          "timestamp": { "N": "1704193500000" },
+          "status": { "S": "READ" },
+          "read_by": {
+            "L": [
+              { "S": "33333333-3333-3333-3333-333333333333" },
+              { "S": "22222222-2222-2222-2222-222222222222" },
+              { "S": "11111111-1111-1111-1111-111111111111" }
+            ]
+          }
         }
       }
     },
     {
       "PutRequest": {
         "Item": {
-          "message_id": {"S": "msg-g2-003"},
-          "conversation_id": {"S": "conv-group-g2222222-2222-2222-2222-222222222222"},
-          "sender_id": {"S": "22222222-2222-2222-2222-222222222222"},
-          "type": {"S": "TEXT"},
-          "content": {"S": "Ok nhé! Mình sẽ cố gắng hoàn thành phần backend"},
-          "timestamp": {"N": "1704195000000"},
-          "status": {"S": "READ"},
-          "read_by": {"L": [
-            {"S": "33333333-3333-3333-3333-333333333333"},
-            {"S": "22222222-2222-2222-2222-222222222222"}
-          ]}
+          "message_id": { "S": "msg-g2-003" },
+          "conversation_id": {
+            "S": "conv-group-g2222222-2222-2222-2222-222222222222"
+          },
+          "sender_id": { "S": "22222222-2222-2222-2222-222222222222" },
+          "type": { "S": "TEXT" },
+          "content": { "S": "Ok nhé! Mình sẽ cố gắng hoàn thành phần backend" },
+          "timestamp": { "N": "1704195000000" },
+          "status": { "S": "READ" },
+          "read_by": {
+            "L": [
+              { "S": "33333333-3333-3333-3333-333333333333" },
+              { "S": "22222222-2222-2222-2222-222222222222" }
+            ]
+          }
         }
       }
     },
     {
       "PutRequest": {
         "Item": {
-          "message_id": {"S": "msg-g2-025"},
-          "conversation_id": {"S": "conv-group-g2222222-2222-2222-2222-222222222222"},
-          "sender_id": {"S": "eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee"},
-          "type": {"S": "TEXT"},
-          "content": {"S": "Push code lên GitHub chưa mọi người?"},
-          "timestamp": {"N": "1704435000000"},
-          "status": {"S": "DELIVERED"},
-          "read_by": {"L": [
-            {"S": "33333333-3333-3333-3333-333333333333"},
-            {"S": "22222222-2222-2222-2222-222222222222"},
-            {"S": "11111111-1111-1111-1111-111111111111"}
-          ]}
+          "message_id": { "S": "msg-g2-025" },
+          "conversation_id": {
+            "S": "conv-group-g2222222-2222-2222-2222-222222222222"
+          },
+          "sender_id": { "S": "eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee" },
+          "type": { "S": "TEXT" },
+          "content": { "S": "Push code lên GitHub chưa mọi người?" },
+          "timestamp": { "N": "1704435000000" },
+          "status": { "S": "DELIVERED" },
+          "read_by": {
+            "L": [
+              { "S": "33333333-3333-3333-3333-333333333333" },
+              { "S": "22222222-2222-2222-2222-222222222222" },
+              { "S": "11111111-1111-1111-1111-111111111111" }
+            ]
+          }
         }
       }
     },
     {
       "PutRequest": {
         "Item": {
-          "message_id": {"S": "msg-g8-040"},
-          "conversation_id": {"S": "conv-group-g8888888-8888-8888-8888-888888888888"},
-          "sender_id": {"S": "11111111-1111-1111-1111-111111111111"},
-          "type": {"S": "TEXT"},
-          "content": {"S": "GPT-5 khi nào ra nhỉ?"},
-          "timestamp": {"N": "1704440400000"},
-          "status": {"S": "DELIVERED"},
-          "read_by": {"L": [
-            {"S": "11111111-1111-1111-1111-111111111111"},
-            {"S": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"}
-          ]}
+          "message_id": { "S": "msg-g8-040" },
+          "conversation_id": {
+            "S": "conv-group-g8888888-8888-8888-8888-888888888888"
+          },
+          "sender_id": { "S": "11111111-1111-1111-1111-111111111111" },
+          "type": { "S": "TEXT" },
+          "content": { "S": "GPT-5 khi nào ra nhỉ?" },
+          "timestamp": { "N": "1704440400000" },
+          "status": { "S": "DELIVERED" },
+          "read_by": {
+            "L": [
+              { "S": "11111111-1111-1111-1111-111111111111" },
+              { "S": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa" }
+            ]
+          }
         }
       }
     }
@@ -769,7 +836,7 @@ def generate_messages(conversation_id, sender_ids, num_messages=20):
     """Generate sample messages for a conversation"""
     messages = []
     base_time = int(datetime(2024, 1, 2).timestamp() * 1000)
-    
+
     sample_texts = [
         "Chào mọi người!",
         "Hôm nay thế nào?",
@@ -782,7 +849,7 @@ def generate_messages(conversation_id, sender_ids, num_messages=20):
         "Tối nay đi chơi không?",
         "Nhớ làm bài tập nhé!",
     ]
-    
+
     for i in range(num_messages):
         sender = sender_ids[i % len(sender_ids)]
         message = {
@@ -800,13 +867,13 @@ def generate_messages(conversation_id, sender_ids, num_messages=20):
             }
         }
         messages.append(message)
-    
+
     return messages
 
 # Example usage:
-# messages = generate_messages("conv-direct-user22-user33", 
+# messages = generate_messages("conv-direct-user22-user33",
 #                               ["22222222-2222-2222-2222-222222222222",
-#                                "33333333-3333-3333-3333-333333333333"], 
+#                                "33333333-3333-3333-3333-333333333333"],
 #                               50)
 ```
 
@@ -815,6 +882,7 @@ def generate_messages(conversation_id, sender_ids, num_messages=20):
 ## Tổng kết dữ liệu
 
 ### PostgreSQL (Relational Data):
+
 - ✅ **15 Users** (đa dạng status)
 - ✅ **20 Friendships** (ACCEPTED, PENDING, BLOCKED)
 - ✅ **12 Groups** (PRIVATE và PUBLIC)
@@ -822,11 +890,13 @@ def generate_messages(conversation_id, sender_ids, num_messages=20):
 - ✅ **33 User Activities** (LOGIN, LOGOUT, MESSAGE_SENT, GROUP_CREATED, GROUP_JOINED)
 
 ### DynamoDB (NoSQL Data):
+
 - ✅ **10 Conversations** (6 DIRECT, 4 GROUP)
 - ✅ **20+ sample Messages** (TEXT, IMAGE, SYSTEM types)
 - ⚠️ **Cần generate thêm 80+ messages** để đủ 100 messages
 
 ### Mối liên kết:
+
 - ✅ Users ↔ Friendships (quan hệ bạn bè)
 - ✅ Users ↔ Groups (người tạo và thành viên)
 - ✅ Users ↔ Group Members (với roles)
