@@ -1,6 +1,7 @@
 package com.ott.domain.user.service;
 
 import com.ott.domain.common.enums.UserStatus;
+import com.ott.domain.user.dto.RegisterRequest;
 import com.ott.domain.user.dto.UpdateProfileRequest;
 import com.ott.domain.user.dto.UserDto;
 import com.ott.domain.user.entity.User;
@@ -9,6 +10,7 @@ import com.ott.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +25,7 @@ import java.util.stream.Collectors;
 public class UserService {
     
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
     
     @Cacheable(value = "users", key = "#id")
     public UserDto findById(UUID id) {
@@ -88,13 +91,6 @@ public class UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
         
-        if (request.getUsername() != null && !request.getUsername().equals(user.getUsername())) {
-            if (userRepository.existsByUsername(request.getUsername())) {
-                throw new IllegalArgumentException("Username already exists");
-            }
-            user.setUsername(request.getUsername());
-        }
-        
         if (request.getEmail() != null && !request.getEmail().equals(user.getEmail())) {
             if (userRepository.existsByEmail(request.getEmail())) {
                 throw new IllegalArgumentException("Email already exists");
@@ -111,6 +107,30 @@ public class UserService {
         }
         
         return mapToDto(userRepository.save(user));
+    }
+    
+    public UserDto register(RegisterRequest request) {
+        // Check if username already exists
+        if (userRepository.existsByUsername(request.getUsername())) {
+            throw new IllegalArgumentException("Username already exists");
+        }
+        
+        // Check if email already exists
+        if (userRepository.existsByEmail(request.getEmail())) {
+            throw new IllegalArgumentException("Email already exists");
+        }
+        
+        // Create new user
+        User user = User.builder()
+                .username(request.getUsername())
+                .email(request.getEmail())
+                .passwordHash(passwordEncoder.encode(request.getPassword()))
+                .phoneNumber(request.getPhoneNumber())
+                .status(UserStatus.ONLINE)
+                .build();
+        
+        User savedUser = userRepository.save(user);
+        return mapToDto(savedUser);
     }
     
     private UserDto mapToDto(User user) {
