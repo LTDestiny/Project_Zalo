@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "@/store/store";
+import { useAppSelector } from "@/store/store";
 import { userApi } from "@/services/api/userApi";
 import { User, UserStatus } from "@/types/user.types";
 
 export const UserProfile: React.FC = () => {
-  const currentUser = useSelector((state: RootState) => state.auth.user);
+  const currentUser = useAppSelector((state) => state.auth.user);
   const [user, setUser] = useState<User | null>(currentUser);
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(false);
