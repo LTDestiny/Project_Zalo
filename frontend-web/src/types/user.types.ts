@@ -1,8 +1,14 @@
 export enum UserStatus {
-  ONLINE = 'ONLINE',
-  OFFLINE = 'OFFLINE',
-  AWAY = 'AWAY',
-  DO_NOT_DISTURB = 'DO_NOT_DISTURB',
+  ONLINE = "ONLINE",
+  OFFLINE = "OFFLINE",
+  AWAY = "AWAY",
+  DO_NOT_DISTURB = "DO_NOT_DISTURB",
+}
+
+export enum UserRole {
+  USER = "USER",
+  ADMIN = "ADMIN",
+  MODERATOR = "MODERATOR",
 }
 
 export interface User {
@@ -12,6 +18,7 @@ export interface User {
   phoneNumber?: string;
   avatarUrl?: string;
   status: UserStatus;
+  role: UserRole;
   createdAt: string;
   lastSeen?: string;
 }
