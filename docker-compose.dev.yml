@@ -3,9 +3,9 @@ version: "3.8"
 services:
   postgres:
     image: postgres:14-alpine
-    container_name: ott-postgres-dev
+    container_name: zola-postgres-dev
     environment:
-      POSTGRES_DB: ottdb
+      POSTGRES_DB: zoladb
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
     ports:
@@ -15,13 +15,13 @@ services:
 
   redis:
     image: redis:7-alpine
-    container_name: ott-redis-dev
+    container_name: zola-redis-dev
     ports:
       - "6379:6379"
 
   dynamodb-local:
     image: amazon/dynamodb-local:latest
-    container_name: ott-dynamodb-dev
+    container_name: zola-dynamodb-dev
     command: "-jar DynamoDBLocal.jar -sharedDb -dbPath ./data"
     ports:
       - "8000:8000"

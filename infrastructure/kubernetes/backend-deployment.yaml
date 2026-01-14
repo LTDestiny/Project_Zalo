@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ott-backend
+  name: zola-backend
   namespace: default
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: ott-backend
+      app: zola-backend
   template:
     metadata:
       labels:
-        app: ott-backend
+        app: zola-backend
     spec:
       containers:
       - name: backend
-        image: ott-backend:latest
+        image: zola-backend:latest
         ports:
         - containerPort: 8080
         env:
@@ -24,22 +24,22 @@ spec:
         - name: SPRING_DATASOURCE_URL
           valueFrom:
             secretKeyRef:
-              name: ott-secrets
+              name: zola-secrets
               key: database-url
         - name: SPRING_DATASOURCE_USERNAME
           valueFrom:
             secretKeyRef:
-              name: ott-secrets
+              name: zola-secrets
               key: database-username
         - name: SPRING_DATASOURCE_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: ott-secrets
+              name: zola-secrets
               key: database-password
         - name: REDIS_HOST
           valueFrom:
             configMapKeyRef:
-              name: ott-config
+              name: zola-config
               key: redis-host
         - name: AWS_REGION
           value: "us-east-1"
@@ -66,12 +66,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ott-backend-service
+  name: zola-backend-service
   namespace: default
 spec:
   type: LoadBalancer
   selector:
-    app: ott-backend
+    app: zola-backend
   ports:
   - protocol: TCP
     port: 80

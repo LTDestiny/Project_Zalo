@@ -45,7 +45,7 @@ export const LoginScreen: React.FC<Props> = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>OTT Platform</Text>
+      <Text style={styles.title}>Zola Platform</Text>
       <TextInput
         style={styles.input}
         placeholder="Username or Email"

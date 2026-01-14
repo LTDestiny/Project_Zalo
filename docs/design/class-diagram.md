@@ -1,8 +1,8 @@
-# Class Diagram - OTT Platform
+# Class Diagram - Zola Platform
 
 ## Mô tả hệ thống
 
-Hệ thống OTT Platform là một ứng dụng nhắn tin tương tự Zalo, bao gồm:
+Hệ thống Zola Platform là một ứng dụng nhắn tin tương tự Zalo, bao gồm:
 - **PostgreSQL**: Lưu trữ thông tin người dùng, nhóm, quan hệ bạn bè
 - **DynamoDB**: Lưu trữ tin nhắn và cuộc hội thoại (NoSQL cho hiệu năng cao)
 - **Redis**: Cache và xử lý realtime

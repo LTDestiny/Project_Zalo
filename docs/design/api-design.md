@@ -2,7 +2,7 @@
 
 ## Base URL
 ```
-Production: https://api.ott-platform.com/api
+Production: https://api.zola-platform.com/api
 Development: http://localhost:8080/api
 ```
 

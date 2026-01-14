@@ -1,6 +1,6 @@
-# OTT Platform - Real-time Chat Application
+# Zola Platform - Real-time Chat Application
 
-A comprehensive over-the-top (OTT) messaging platform with hybrid PostgreSQL/DynamoDB architecture, built with Spring Boot, React, and React Native.
+A comprehensive Zola messaging platform with hybrid PostgreSQL/DynamoDB architecture, built with Spring Boot, React, and React Native.
 
 ## Architecture Overview
 
@@ -43,7 +43,7 @@ A comprehensive over-the-top (OTT) messaging platform with hybrid PostgreSQL/Dyn
 ## Project Structure
 
 ```
-ott-platform/
+zola-platform/
 ├── backend/              # Spring Boot application
 ├── frontend-web/         # React web application
 ├── frontend-mobile/      # React Native mobile app
@@ -117,7 +117,7 @@ npx react-native run-android  # or run-ios
 
 ### Backend
 ```
-SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/ottdb
+SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/zoladb
 SPRING_DATASOURCE_USERNAME=postgres
 SPRING_DATASOURCE_PASSWORD=password
 AWS_ACCESS_KEY_ID=your_key
@@ -185,4 +185,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Contact
 
-Project Link: [https://github.com/yourusername/ott-platform](https://github.com/yourusername/ott-platform)
+Project Link: [https://github.com/yourusername/zola-platform](https://github.com/yourusername/zola-platform)

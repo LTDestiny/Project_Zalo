@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/ottdb_dev
+    url: jdbc:postgresql://localhost:5432/zoladb_dev
   
   jpa:
     show-sql: true
@@ -13,5 +13,5 @@ aws:
 
 logging:
   level:
-    com.ott: DEBUG
+    com.zola: DEBUG
     org.springframework.web: DEBUG

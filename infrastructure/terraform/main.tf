@@ -9,7 +9,7 @@ terraform {
   }
   
   backend "s3" {
-    bucket = "ott-terraform-state"
+    bucket = "zola-terraform-state"
     key    = "terraform.tfstate"
     region = "us-east-1"
   }
@@ -25,7 +25,7 @@ variable "aws_region" {
 }
 
 variable "project_name" {
-  default = "ott-platform"
+  default = "zola-platform"
 }
 
 variable "environment" {
@@ -49,7 +49,7 @@ module "rds" {
   environment        = var.environment
   vpc_id             = module.vpc.vpc_id
   subnet_ids         = module.vpc.private_subnet_ids
-  db_name            = "ottdb"
+  db_name            = "zoladb"
   db_username        = "postgres"
   instance_class     = "db.t3.medium"
   allocated_storage  = 100

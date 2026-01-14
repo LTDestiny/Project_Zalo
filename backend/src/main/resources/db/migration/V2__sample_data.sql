@@ -1,5 +1,5 @@
 -- ============================================
--- OTT Platform - Sample Data
+-- Zola Platform - Sample Data
 -- All users have password: password123
 -- Password hash: $2a$10$QQAg5WcMhUwsPsZVaqws5uToAP8afULmRnuwcqyC0MuRqVGfP2BOK
 -- ============================================
@@ -8,7 +8,7 @@
 -- Insert Users (15 users)
 -- ============================================
 INSERT INTO users (id, username, email, password_hash, phone_number, avatar_url, status, role, last_seen) VALUES
-('11111111-1111-1111-1111-111111111111', 'admin_user', 'admin@ott.com', '$2a$10$QQAg5WcMhUwsPsZVaqws5uToAP8afULmRnuwcqyC0MuRqVGfP2BOK', '+84901234567', 'https://i.pravatar.cc/150?img=1', 'ONLINE', 'ADMIN', NOW()),
+('11111111-1111-1111-1111-111111111111', 'admin_user', 'admin@zola.com', '$2a$10$QQAg5WcMhUwsPsZVaqws5uToAP8afULmRnuwcqyC0MuRqVGfP2BOK', '+84901234567', 'https://i.pravatar.cc/150?img=1', 'ONLINE', 'ADMIN', NOW()),
 ('22222222-2222-2222-2222-222222222222', 'john_doe', 'john.doe@example.com', '$2a$10$QQAg5WcMhUwsPsZVaqws5uToAP8afULmRnuwcqyC0MuRqVGfP2BOK', '+84912345678', 'https://i.pravatar.cc/150?img=2', 'ONLINE', 'USER', NOW()),
 ('33333333-3333-3333-3333-333333333333', 'jane_smith', 'jane.smith@example.com', '$2a$10$QQAg5WcMhUwsPsZVaqws5uToAP8afULmRnuwcqyC0MuRqVGfP2BOK', '+84923456789', 'https://i.pravatar.cc/150?img=3', 'AWAY', 'USER', NOW() - INTERVAL '10 minutes'),
 ('44444444-4444-4444-4444-444444444444', 'bob_wilson', 'bob.wilson@example.com', '$2a$10$QQAg5WcMhUwsPsZVaqws5uToAP8afULmRnuwcqyC0MuRqVGfP2BOK', '+84934567890', 'https://i.pravatar.cc/150?img=4', 'OFFLINE', 'USER', NOW() - INTERVAL '2 hours'),

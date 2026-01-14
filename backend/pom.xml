@@ -12,10 +12,10 @@
         <relativePath/>
     </parent>
     
-    <groupId>com.ott</groupId>
-    <artifactId>ott-platform</artifactId>
+    <groupId>com.zola</groupId>
+    <artifactId>zola-platform</artifactId>
     <version>1.0.0</version>
-    <name>OTT Platform</name>
+    <name>Zola Platform</name>
     <description>Real-time messaging platform with hybrid PostgreSQL/DynamoDB architecture</description>
     
     <properties>

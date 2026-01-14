@@ -1,4 +1,4 @@
-# DynamoDB Tables for OTT Platform
+# DynamoDB Tables for Zola Platform
 
 resource "aws_dynamodb_table" "messages" {
   name           = "${var.project_name}-messages-${var.environment}"
