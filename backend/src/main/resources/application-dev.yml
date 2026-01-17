@@ -1,7 +1,7 @@
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/zoladb_dev
-  
+
   jpa:
     show-sql: true
     hibernate:
