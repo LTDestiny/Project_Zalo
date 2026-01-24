@@ -37,7 +37,7 @@ public class UserActivity {
     private ActivityType type;
     
     @JdbcTypeCode(SqlTypes.JSON)
-    @Column(columnDefinition = "jsonb")
+    @Column(columnDefinition = "json")
     private Map<String, Object> metadata;
     
     @CreationTimestamp

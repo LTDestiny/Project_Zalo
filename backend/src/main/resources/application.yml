@@ -41,16 +41,20 @@ spring:
 
 # AWS Configuration
 aws:
-  region: ${AWS_REGION:us-east-1}
-  access-key: ${AWS_ACCESS_KEY_ID:}
-  secret-key: ${AWS_SECRET_ACCESS_KEY:}
+  region: ${AWS_REGION:ap-southeast-1}
+  access-key: ${AWS_ACCESS_KEY_ID:your-access-key-here}
+  secret-key: ${AWS_SECRET_ACCESS_KEY:your-secret-key-here}
   dynamodb:
     endpoint: ${AWS_DYNAMODB_ENDPOINT:}
   s3:
     bucket:
-      avatars: ${S3_BUCKET_AVATARS:zola-avatars}
-      messages: ${S3_BUCKET_MESSAGES:zola-messages}
-      documents: ${S3_BUCKET_DOCUMENTS:zola-documents}
+      avatars: ${S3_BUCKET_AVATARS:zola-avatars-dev}
+      messages: ${S3_BUCKET_MESSAGES:zola-messages-dev}
+      shared-files: ${S3_BUCKET_SHARED_FILES:zola-shared-files-dev}
+      analytics: ${S3_BUCKET_ANALYTICS:zola-analytics-dev}
+    cloudfront:
+      avatars-domain: ${CLOUDFRONT_AVATARS_DOMAIN:your-cloudfront-domain}
+      messages-domain: ${CLOUDFRONT_MESSAGES_DOMAIN:your-cloudfront-domain}
 
 # JWT Configuration
 jwt:

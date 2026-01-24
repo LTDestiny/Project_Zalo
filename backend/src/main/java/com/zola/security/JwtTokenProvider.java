@@ -25,12 +25,12 @@ public class JwtTokenProvider {
         return Keys.hmacShaKeyFor(jwtSecret.getBytes());
     }
     
-    public String generateToken(UUID userId, String username) {
+    public String generateToken(String userId, String username) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + jwtExpirationMs);
         
         return Jwts.builder()
-                .subject(userId.toString())
+                .subject(userId)
                 .claim("username", username)
                 .issuedAt(now)
                 .expiration(expiryDate)
@@ -38,14 +38,14 @@ public class JwtTokenProvider {
                 .compact();
     }
     
-    public UUID getUserIdFromToken(String token) {
+    public String getUserIdFromToken(String token) {
         Claims claims = Jwts.parser()
                 .verifyWith(Keys.hmacShaKeyFor(jwtSecret.getBytes()))
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
         
-        return UUID.fromString(claims.getSubject());
+        return claims.getSubject();
     }
     
     public String getUsernameFromToken(String token) {
