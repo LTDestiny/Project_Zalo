@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { Message, MessageType, MessageStatus } from "../../types/message.types";
 import { User } from "@/types/user.types";
+import { formatTime, getDisplayName, getUserInitials } from "@/utils";
 
 export const ChatRoom: React.FC = () => {
   const { chatId } = useParams<{ chatId: string }>();
@@ -138,24 +139,6 @@ export const ChatRoom: React.FC = () => {
     }
   };
 
-  const formatTime = (timestamp: number) => {
-    const date = new Date(timestamp);
-    const now = new Date();
-    const diffInHours = (now.getTime() - date.getTime()) / (1000 * 60 * 60);
-
-    if (diffInHours < 24) {
-      return date.toLocaleTimeString("en-US", {
-        hour: "2-digit",
-        minute: "2-digit",
-      });
-    } else {
-      return date.toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-      });
-    }
-  };
-
   if (loading) {
     return (
       <div className="flex-1 flex items-center justify-center">
@@ -172,7 +155,7 @@ export const ChatRoom: React.FC = () => {
     );
   }
 
-  const userName = chatUser.displayName || chatUser.username;
+  const userName = getDisplayName(chatUser);
   const isOnline = chatUser.status === "ONLINE";
 
   return (
@@ -194,7 +177,7 @@ export const ChatRoom: React.FC = () => {
                 />
               ) : (
                 <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center text-white font-semibold hover:ring-2 hover:ring-primary-300 transition-all">
-                  {userName.charAt(0).toUpperCase()}
+                  {getUserInitials(userName)}
                 </div>
               )}
               {isOnline && (
