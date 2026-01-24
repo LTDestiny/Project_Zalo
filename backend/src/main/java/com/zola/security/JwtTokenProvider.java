@@ -21,13 +21,24 @@ public class JwtTokenProvider {
     @Value("${jwt.expiration-ms}")
     private long jwtExpirationMs;
     
+    @Value("${jwt.refresh-expiration-ms:2592000000}") // 30 days default
+    private long jwtRefreshExpirationMs;
+    
     private Key getSigningKey() {
         return Keys.hmacShaKeyFor(jwtSecret.getBytes());
     }
     
     public String generateToken(String userId, String username) {
+        return generateTokenWithExpiration(userId, username, jwtExpirationMs);
+    }
+    
+    public String generateRefreshToken(String userId, String username) {
+        return generateTokenWithExpiration(userId, username, jwtRefreshExpirationMs);
+    }
+    
+    private String generateTokenWithExpiration(String userId, String username, long expirationMs) {
         Date now = new Date();
-        Date expiryDate = new Date(now.getTime() + jwtExpirationMs);
+        Date expiryDate = new Date(now.getTime() + expirationMs);
         
         return Jwts.builder()
                 .subject(userId)
