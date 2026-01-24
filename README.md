@@ -4,20 +4,38 @@ A comprehensive Zola messaging platform with hybrid PostgreSQL/DynamoDB architec
 
 ## Architecture Overview
 
+### Key Features
+
+- **Comprehensive Authentication**: Register, Login, Email Verification, Password Reset, Refresh Tokens
+- **Security**: JWT tokens, BCrypt password hashing, Account lockout protection
+- **Real-time Messaging**: WebSocket-based chat with delivery/read receipts
+- **Group Management**: Create/manage groups with role-based permissions
+- **Media Sharing**: Upload/download files with S3 storage
+- **User Management**: Profile updates, status tracking, friend connections
+- **Analytics**: User activity tracking and statistics
+
 ### Database Strategy
 - **PostgreSQL**: Relational data (users, groups, friendships, user activities)
+  - Enhanced with 30+ optimized indexes (partial, composite, GIN, full-text)
+  - Authentication columns (email_verified, tokens, login_attempts, locked_until)
 - **DynamoDB**: High-throughput data (messages, conversations, chatbot sessions, statistics)
 
 ### Technology Stack
 
 #### Backend
-- Java 17+ with Spring Boot 3.x
-- Spring Data JPA (PostgreSQL)
+- Java 17/21 with Spring Boot 3.4.1
+- Spring Data JPA (PostgreSQL 17.4+)
 - Spring Data DynamoDB
-- Spring Security + JWT
+- Spring Security + JWT Authentication
+  - Access tokens (15 min expiry)
+  - Refresh tokens (30 days expiry)
+  - Email verification
+  - Password reset
+  - Account lockout (5 failed attempts)
 - WebSocket for real-time messaging
 - AWS SDK (S3, DynamoDB)
 - Redis for caching
+- Flyway database migrations
 
 #### Frontend Web
 - React 18+ with TypeScript

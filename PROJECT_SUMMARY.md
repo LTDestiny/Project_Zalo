@@ -175,11 +175,16 @@ zola-platform/
 ## 🗄️ Database Design
 
 ### PostgreSQL (Relational Data)
-- **users**: User accounts and profiles
-- **groups**: Group chat information
-- **group_members**: User-group relationships with roles
-- **friendships**: Friend connections with status
-- **user_activities**: Activity logging
+- **users**: User accounts and profiles (11 indexes)
+  - Authentication fields: email_verified, verification_token, reset_token, refresh_token, login_attempts, locked_until
+  - Security: BCrypt password hashing, JWT-based authentication, account lockout mechanism
+  - 4 partial indexes for token lookups (verification, reset, refresh tokens)
+- **groups**: Group chat information (6 indexes with full-text search)
+- **group_members**: User-group relationships with roles (7 indexes)
+- **friendships**: Friend connections with status (6 indexes with composites)
+- **user_activities**: Activity logging with JSONB metadata (5 indexes including GIN)
+
+**Total**: 5 tables, 30+ optimized indexes, v2 schema with 20 sample users
 
 ### DynamoDB (High-Throughput Data)
 - **Messages**: Real-time messaging with GSIs
