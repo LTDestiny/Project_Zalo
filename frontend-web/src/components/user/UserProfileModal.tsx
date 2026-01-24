@@ -13,6 +13,12 @@ import {
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "@/store/store";
+import {
+  getStatusColor,
+  getStatusText,
+  formatDate,
+  formatLastSeen,
+} from "@/utils";
 
 interface UserProfileModalProps {
   userId: string;
@@ -44,61 +50,6 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
 
     fetchUserProfile();
   }, [userId]);
-
-  const getStatusColor = (status: UserStatus) => {
-    switch (status) {
-      case UserStatus.ONLINE:
-        return "bg-green-500";
-      case UserStatus.OFFLINE:
-        return "bg-gray-500";
-      case UserStatus.AWAY:
-        return "bg-yellow-500";
-      case UserStatus.DO_NOT_DISTURB:
-        return "bg-red-500";
-      default:
-        return "bg-gray-500";
-    }
-  };
-
-  const getStatusText = (status: UserStatus) => {
-    switch (status) {
-      case UserStatus.ONLINE:
-        return "Online";
-      case UserStatus.OFFLINE:
-        return "Offline";
-      case UserStatus.AWAY:
-        return "Away";
-      case UserStatus.DO_NOT_DISTURB:
-        return "Do Not Disturb";
-      default:
-        return "Unknown";
-    }
-  };
-
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString("vi-VN", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  };
-
-  const formatLastSeen = (dateString?: string) => {
-    if (!dateString) return "Unknown";
-    const date = new Date(dateString);
-    const now = new Date();
-    const diffMs = now.getTime() - date.getTime();
-    const diffMins = Math.floor(diffMs / 60000);
-    const diffHours = Math.floor(diffMins / 60);
-    const diffDays = Math.floor(diffHours / 24);
-
-    if (diffMins < 1) return "Just now";
-    if (diffMins < 60) return `${diffMins} minutes ago`;
-    if (diffHours < 24) return `${diffHours} hours ago`;
-    if (diffDays < 7) return `${diffDays} days ago`;
-    return formatDate(dateString);
-  };
 
   const handleSendMessage = () => {
     if (user) {
