@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { userApi } from "@/services/api/userApi";
 import { User, UserStatus } from "@/types/user.types";
+import { UserProfileModal } from "./UserProfileModal";
 
 export const UserSearch: React.FC = () => {
   const [query, setQuery] = useState("");
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -75,7 +77,8 @@ export const UserSearch: React.FC = () => {
             {users.map((user) => (
               <div
                 key={user.id}
-                className="flex items-center space-x-4 p-4 border border-gray-200 rounded-lg hover:bg-gray-50"
+                onClick={() => setSelectedUserId(user.id)}
+                className="flex items-center space-x-4 p-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition-all transform hover:scale-[1.02]"
               >
                 <div className="relative">
                   <img
@@ -85,7 +88,7 @@ export const UserSearch: React.FC = () => {
                   />
                   <div
                     className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white ${getStatusColor(
-                      user.status
+                      user.status,
                     )}`}
                   />
                 </div>
@@ -102,10 +105,10 @@ export const UserSearch: React.FC = () => {
                       user.status === UserStatus.ONLINE
                         ? "bg-green-100 text-green-800"
                         : user.status === UserStatus.AWAY
-                        ? "bg-yellow-100 text-yellow-800"
-                        : user.status === UserStatus.DO_NOT_DISTURB
-                        ? "bg-red-100 text-red-800"
-                        : "bg-gray-100 text-gray-800"
+                          ? "bg-yellow-100 text-yellow-800"
+                          : user.status === UserStatus.DO_NOT_DISTURB
+                            ? "bg-red-100 text-red-800"
+                            : "bg-gray-100 text-gray-800"
                     }`}
                   >
                     {user.status}
@@ -124,6 +127,13 @@ export const UserSearch: React.FC = () => {
           !loading && (
             <p className="text-center text-gray-500">No users found</p>
           )
+        )}
+
+        {selectedUserId && (
+          <UserProfileModal
+            userId={selectedUserId}
+            onClose={() => setSelectedUserId(null)}
+          />
         )}
       </div>
     </div>

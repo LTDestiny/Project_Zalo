@@ -25,7 +25,7 @@ class ApiClient {
       },
       (error) => {
         return Promise.reject(error);
-      }
+      },
     );
 
     // Response interceptor
@@ -33,11 +33,23 @@ class ApiClient {
       (response) => response,
       (error) => {
         if (error.response?.status === 401) {
+          // Token expired or invalid
           localStorage.removeItem("token");
-          window.location.href = "/login";
+          localStorage.removeItem("user");
+
+          // Only redirect if not already on login/register pages
+          const currentPath = window.location.pathname;
+          if (
+            !currentPath.includes("/login") &&
+            !currentPath.includes("/register") &&
+            !currentPath.includes("/forgot-password") &&
+            !currentPath.includes("/reset-password")
+          ) {
+            window.location.href = "/login";
+          }
         }
         return Promise.reject(error);
-      }
+      },
     );
   }
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   MessageCircle,
@@ -14,6 +14,13 @@ import {
 export const HomePage: React.FC = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
+
+  // Auto redirect to chat if already logged in
+  useEffect(() => {
+    if (token) {
+      navigate("/chat", { replace: true });
+    }
+  }, [token, navigate]);
 
   const handleGetStarted = () => {
     if (token) {
