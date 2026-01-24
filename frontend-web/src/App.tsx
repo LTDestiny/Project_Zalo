@@ -13,8 +13,8 @@ import { ResetPasswordForm } from "./components/auth/ResetPasswordForm";
 import { VerifyEmailPage } from "./components/auth/VerifyEmailPage";
 import { ChangePasswordForm } from "./components/auth/ChangePasswordForm";
 import { HomePage } from "./components/home/HomePage";
-import { ChatRoom } from "./components/chat/ChatRoom";
-import { SettingsPage } from "./components/settings/SettingsPage";
+import { ChatLayout } from "./components/chat/ChatLayout";
+import { SettingsLayout } from "./components/settings/SettingsLayout";
 import "./index.css";
 
 // Protected Route Component
@@ -46,7 +46,15 @@ function App() {
             path="/settings"
             element={
               <ProtectedRoute>
-                <SettingsPage />
+                <SettingsLayout />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <SettingsLayout />
               </ProtectedRoute>
             }
           />
@@ -54,7 +62,15 @@ function App() {
             path="/chat"
             element={
               <ProtectedRoute>
-                <ChatRoom />
+                <ChatLayout />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/chat/:chatId"
+            element={
+              <ProtectedRoute>
+                <ChatLayout />
               </ProtectedRoute>
             }
           />

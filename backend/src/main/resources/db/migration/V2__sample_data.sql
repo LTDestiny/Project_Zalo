@@ -7,30 +7,30 @@
 -- All users are email verified for testing purposes
 INSERT INTO users (id, username, email, password_hash, phone_number, status, role, avatar_url, email_verified, login_attempts) VALUES
 -- Active users (ONLINE)
-('550e8400-e29b-41d4-a716-446655440001', 'john_doe', 'john.doe@example.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', '+84901234567', 'ONLINE', 'USER', 'https://i.pravatar.cc/150?img=1', TRUE, 0),
-('550e8400-e29b-41d4-a716-446655440002', 'jane_smith', 'jane.smith@example.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', '+84901234568', 'ONLINE', 'USER', 'https://i.pravatar.cc/150?img=2', TRUE, 0),
-('550e8400-e29b-41d4-a716-446655440006', 'charlie_davis', 'charlie.davis@example.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', '+84901234572', 'ONLINE', 'USER', 'https://i.pravatar.cc/150?img=6', TRUE, 0),
-('550e8400-e29b-41d4-a716-446655440009', 'grace_lee', 'grace.lee@example.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', '+84901234575', 'ONLINE', 'USER', 'https://i.pravatar.cc/150?img=9', TRUE, 0),
-('550e8400-e29b-41d4-a716-446655440011', 'ivan_petrov', 'ivan.petrov@example.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', '+84901234577', 'ONLINE', 'USER', 'https://i.pravatar.cc/150?img=11', TRUE, 0),
-('550e8400-e29b-41d4-a716-446655440012', 'julia_kim', 'julia.kim@example.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', '+84901234578', 'ONLINE', 'USER', 'https://i.pravatar.cc/150?img=12', TRUE, 0),
+('550e8400-e29b-41d4-a716-446655440001', 'john_doe', 'john.doe@example.com', '$2a$10$WoWiO6me.3wj//m4CIZDKuwbvlTSa.85O013wcsE6Fxq77vwTB5Ai', '+84901234567', 'ONLINE', 'USER', 'https://i.pravatar.cc/150?img=1', TRUE, 0),
+('550e8400-e29b-41d4-a716-446655440002', 'jane_smith', 'jane.smith@example.com', '$2a$10$WoWiO6me.3wj//m4CIZDKuwbvlTSa.85O013wcsE6Fxq77vwTB5Ai', '+84901234568', 'ONLINE', 'USER', 'https://i.pravatar.cc/150?img=2', TRUE, 0),
+('550e8400-e29b-41d4-a716-446655440006', 'charlie_davis', 'charlie.davis@example.com', '$2a$10$WoWiO6me.3wj//m4CIZDKuwbvlTSa.85O013wcsE6Fxq77vwTB5Ai', '+84901234572', 'ONLINE', 'USER', 'https://i.pravatar.cc/150?img=6', TRUE, 0),
+('550e8400-e29b-41d4-a716-446655440009', 'grace_lee', 'grace.lee@example.com', '$2a$10$WoWiO6me.3wj//m4CIZDKuwbvlTSa.85O013wcsE6Fxq77vwTB5Ai', '+84901234575', 'ONLINE', 'USER', 'https://i.pravatar.cc/150?img=9', TRUE, 0),
+('550e8400-e29b-41d4-a716-446655440011', 'ivan_petrov', 'ivan.petrov@example.com', '$2a$10$WoWiO6me.3wj//m4CIZDKuwbvlTSa.85O013wcsE6Fxq77vwTB5Ai', '+84901234577', 'ONLINE', 'USER', 'https://i.pravatar.cc/150?img=11', TRUE, 0),
+('550e8400-e29b-41d4-a716-446655440012', 'julia_kim', 'julia.kim@example.com', '$2a$10$WoWiO6me.3wj//m4CIZDKuwbvlTSa.85O013wcsE6Fxq77vwTB5Ai', '+84901234578', 'ONLINE', 'USER', 'https://i.pravatar.cc/150?img=12', TRUE, 0),
 -- Admin user
-('550e8400-e29b-41d4-a716-446655440005', 'admin_user', 'admin@zola.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', '+84901234571', 'ONLINE', 'ADMIN', 'https://i.pravatar.cc/150?img=5', TRUE, 0),
+('550e8400-e29b-41d4-a716-446655440005', 'admin_user', 'admin@zola.com', '$2a$10$WoWiO6me.3wj//m4CIZDKuwbvlTSa.85O013wcsE6Fxq77vwTB5Ai', '+84901234571', 'ONLINE', 'ADMIN', 'https://i.pravatar.cc/150?img=5', TRUE, 0),
 -- Away users
-('550e8400-e29b-41d4-a716-446655440003', 'bob_wilson', 'bob.wilson@example.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', '+84901234569', 'AWAY', 'USER', 'https://i.pravatar.cc/150?img=3', TRUE, 0),
-('550e8400-e29b-41d4-a716-446655440010', 'henry_nguyen', 'henry.nguyen@example.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', '+84901234576', 'AWAY', 'USER', 'https://i.pravatar.cc/150?img=10', TRUE, 0),
-('550e8400-e29b-41d4-a716-446655440015', 'oliver_chen', 'oliver.chen@example.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', '+84901234581', 'AWAY', 'USER', 'https://i.pravatar.cc/150?img=15', TRUE, 0),
+('550e8400-e29b-41d4-a716-446655440003', 'bob_wilson', 'bob.wilson@example.com', '$2a$10$WoWiO6me.3wj//m4CIZDKuwbvlTSa.85O013wcsE6Fxq77vwTB5Ai', '+84901234569', 'AWAY', 'USER', 'https://i.pravatar.cc/150?img=3', TRUE, 0),
+('550e8400-e29b-41d4-a716-446655440010', 'henry_nguyen', 'henry.nguyen@example.com', '$2a$10$WoWiO6me.3wj//m4CIZDKuwbvlTSa.85O013wcsE6Fxq77vwTB5Ai', '+84901234576', 'AWAY', 'USER', 'https://i.pravatar.cc/150?img=10', TRUE, 0),
+('550e8400-e29b-41d4-a716-446655440015', 'oliver_chen', 'oliver.chen@example.com', '$2a$10$WoWiO6me.3wj//m4CIZDKuwbvlTSa.85O013wcsE6Fxq77vwTB5Ai', '+84901234581', 'AWAY', 'USER', 'https://i.pravatar.cc/150?img=15', TRUE, 0),
 -- Do Not Disturb users
-('550e8400-e29b-41d4-a716-446655440007', 'diana_evans', 'diana.evans@example.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', '+84901234573', 'DO_NOT_DISTURB', 'USER', 'https://i.pravatar.cc/150?img=7', TRUE, 0),
-('550e8400-e29b-41d4-a716-446655440013', 'kevin_tran', 'kevin.tran@example.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', '+84901234579', 'DO_NOT_DISTURB', 'USER', 'https://i.pravatar.cc/150?img=13', TRUE, 0),
+('550e8400-e29b-41d4-a716-446655440007', 'diana_evans', 'diana.evans@example.com', '$2a$10$WoWiO6me.3wj//m4CIZDKuwbvlTSa.85O013wcsE6Fxq77vwTB5Ai', '+84901234573', 'DO_NOT_DISTURB', 'USER', 'https://i.pravatar.cc/150?img=7', TRUE, 0),
+('550e8400-e29b-41d4-a716-446655440013', 'kevin_tran', 'kevin.tran@example.com', '$2a$10$WoWiO6me.3wj//m4CIZDKuwbvlTSa.85O013wcsE6Fxq77vwTB5Ai', '+84901234579', 'DO_NOT_DISTURB', 'USER', 'https://i.pravatar.cc/150?img=13', TRUE, 0),
 -- Offline users
-('550e8400-e29b-41d4-a716-446655440004', 'alice_brown', 'alice.brown@example.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', '+84901234570', 'OFFLINE', 'USER', 'https://i.pravatar.cc/150?img=4', TRUE, 0),
-('550e8400-e29b-41d4-a716-446655440008', 'frank_miller', 'frank.miller@example.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', '+84901234574', 'OFFLINE', 'USER', 'https://i.pravatar.cc/150?img=8', TRUE, 0),
-('550e8400-e29b-41d4-a716-446655440014', 'lisa_wang', 'lisa.wang@example.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', '+84901234580', 'OFFLINE', 'USER', 'https://i.pravatar.cc/150?img=14', TRUE, 0),
-('550e8400-e29b-41d4-a716-446655440016', 'peter_garcia', 'peter.garcia@example.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', '+84901234582', 'OFFLINE', 'USER', 'https://i.pravatar.cc/150?img=16', TRUE, 0),
-('550e8400-e29b-41d4-a716-446655440017', 'quinn_lopez', 'quinn.lopez@example.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', '+84901234583', 'OFFLINE', 'USER', 'https://i.pravatar.cc/150?img=17', TRUE, 0),
-('550e8400-e29b-41d4-a716-446655440018', 'rachel_martinez', 'rachel.martinez@example.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', '+84901234584', 'OFFLINE', 'USER', 'https://i.pravatar.cc/150?img=18', TRUE, 0),
-('550e8400-e29b-41d4-a716-446655440019', 'steven_rodriguez', 'steven.rodriguez@example.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', '+84901234585', 'OFFLINE', 'USER', 'https://i.pravatar.cc/150?img=19', TRUE, 0),
-('550e8400-e29b-41d4-a716-446655440020', 'tina_anderson', 'tina.anderson@example.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', '+84901234586', 'OFFLINE', 'USER', 'https://i.pravatar.cc/150?img=20', TRUE, 0);
+('550e8400-e29b-41d4-a716-446655440004', 'alice_brown', 'alice.brown@example.com', '$2a$10$WoWiO6me.3wj//m4CIZDKuwbvlTSa.85O013wcsE6Fxq77vwTB5Ai', '+84901234570', 'OFFLINE', 'USER', 'https://i.pravatar.cc/150?img=4', TRUE, 0),
+('550e8400-e29b-41d4-a716-446655440008', 'frank_miller', 'frank.miller@example.com', '$2a$10$WoWiO6me.3wj//m4CIZDKuwbvlTSa.85O013wcsE6Fxq77vwTB5Ai', '+84901234574', 'OFFLINE', 'USER', 'https://i.pravatar.cc/150?img=8', TRUE, 0),
+('550e8400-e29b-41d4-a716-446655440014', 'lisa_wang', 'lisa.wang@example.com', '$2a$10$WoWiO6me.3wj//m4CIZDKuwbvlTSa.85O013wcsE6Fxq77vwTB5Ai', '+84901234580', 'OFFLINE', 'USER', 'https://i.pravatar.cc/150?img=14', TRUE, 0),
+('550e8400-e29b-41d4-a716-446655440016', 'peter_garcia', 'peter.garcia@example.com', '$2a$10$WoWiO6me.3wj//m4CIZDKuwbvlTSa.85O013wcsE6Fxq77vwTB5Ai', '+84901234582', 'OFFLINE', 'USER', 'https://i.pravatar.cc/150?img=16', TRUE, 0),
+('550e8400-e29b-41d4-a716-446655440017', 'quinn_lopez', 'quinn.lopez@example.com', '$2a$10$WoWiO6me.3wj//m4CIZDKuwbvlTSa.85O013wcsE6Fxq77vwTB5Ai', '+84901234583', 'OFFLINE', 'USER', 'https://i.pravatar.cc/150?img=17', TRUE, 0),
+('550e8400-e29b-41d4-a716-446655440018', 'rachel_martinez', 'rachel.martinez@example.com', '$2a$10$WoWiO6me.3wj//m4CIZDKuwbvlTSa.85O013wcsE6Fxq77vwTB5Ai', '+84901234584', 'OFFLINE', 'USER', 'https://i.pravatar.cc/150?img=18', TRUE, 0),
+('550e8400-e29b-41d4-a716-446655440019', 'steven_rodriguez', 'steven.rodriguez@example.com', '$2a$10$WoWiO6me.3wj//m4CIZDKuwbvlTSa.85O013wcsE6Fxq77vwTB5Ai', '+84901234585', 'OFFLINE', 'USER', 'https://i.pravatar.cc/150?img=19', TRUE, 0),
+('550e8400-e29b-41d4-a716-446655440020', 'tina_anderson', 'tina.anderson@example.com', '$2a$10$WoWiO6me.3wj//m4CIZDKuwbvlTSa.85O013wcsE6Fxq77vwTB5Ai', '+84901234586', 'OFFLINE', 'USER', 'https://i.pravatar.cc/150?img=20', TRUE, 0);
 
 -- Insert extensive friendships network
 INSERT INTO friendships (user_id_1, user_id_2, status) VALUES
