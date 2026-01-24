@@ -1,31 +1,31 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { authApi } from '@/services/api/authApi';
-import { setCredentials } from '@/store/authSlice';
-import { LoginRequest } from '@/types/user.types';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { authApi } from "@/services/api/authApi";
+import { setCredentials } from "@/store/authSlice";
+import { LoginRequest } from "@/types/user.types";
 
 export const LoginForm: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [formData, setFormData] = useState<LoginRequest>({
-    usernameOrEmail: '',
-    password: '',
+    usernameOrEmail: "",
+    password: "",
   });
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setLoading(true);
 
     try {
       const response = await authApi.login(formData);
       dispatch(setCredentials(response));
-      navigate('/chat');
+      navigate("/chat");
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Login failed');
+      setError(err.response?.data?.message || "Login failed");
     } finally {
       setLoading(false);
     }
@@ -36,7 +36,7 @@ export const LoginForm: React.FC = () => {
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Sign in to OTT Platform
+            Sign in to Zola Platform
           </h2>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
@@ -78,14 +78,14 @@ export const LoginForm: React.FC = () => {
               disabled={loading}
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50"
             >
-              {loading ? 'Signing in...' : 'Sign in'}
+              {loading ? "Signing in..." : "Sign in"}
             </button>
           </div>
 
           <div className="text-center">
             <button
               type="button"
-              onClick={() => navigate('/register')}
+              onClick={() => navigate("/register")}
               className="font-medium text-primary-600 hover:text-primary-500"
             >
               Don't have an account? Register

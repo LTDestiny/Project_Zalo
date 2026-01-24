@@ -1,4 +1,4 @@
-# OTT Platform - Project Implementation Summary
+# Zola Platform - Project Implementation Summary
 
 ## ✅ Project Successfully Created
 
@@ -9,9 +9,9 @@ A complete real-time messaging platform with hybrid PostgreSQL/DynamoDB architec
 ## 📁 Project Structure
 
 ```
-ott-platform/
+zola-platform/
 ├── backend/                    # Spring Boot Application
-│   ├── src/main/java/com/ott/
+│   ├── src/main/java/com/zola/
 │   │   ├── domain/
 │   │   │   ├── user/          # User entities, repos, services
 │   │   │   ├── group/         # Group management
@@ -237,7 +237,7 @@ npx expo start
 
 ### Backend (.env or application.yml)
 ```env
-SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/ottdb
+SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/zoladb
 SPRING_DATASOURCE_USERNAME=postgres
 SPRING_DATASOURCE_PASSWORD=password
 AWS_ACCESS_KEY_ID=your_key
@@ -405,6 +405,6 @@ Key endpoints:
 
 ## 📞 Support & Contribution
 
-This is a production-ready foundation for an OTT messaging platform. All core architecture, configurations, and integrations are in place. The project follows industry best practices for scalability, security, and maintainability.
+This is a production-ready foundation for an Zola messaging platform. All core architecture, configurations, and integrations are in place. The project follows industry best practices for scalability, security, and maintainability.
 
 Happy Coding! 🚀

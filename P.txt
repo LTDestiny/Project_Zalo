@@ -1,0 +1,3 @@
+Admin#12345
+
+ssh -i ~/.ssh/ZolaProject.pem ubuntu@ec2-52-221-239-101.ap-southeast-1.compute.amazonaws.com

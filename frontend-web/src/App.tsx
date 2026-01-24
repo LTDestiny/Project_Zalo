@@ -1,9 +1,13 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { store } from './store/store';
-import { LoginForm } from './components/auth/LoginForm';
-import './index.css';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import { Provider } from "react-redux";
+import { store } from "./store/store";
+import { LoginForm } from "./components/auth/LoginForm";
+import "./index.css";
 
 function App() {
   return (
