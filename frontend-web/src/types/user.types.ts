@@ -15,12 +15,14 @@ export interface User {
   id: string;
   username: string;
   email: string;
+  displayName?: string;
   phoneNumber?: string;
   avatarUrl?: string;
   status: UserStatus;
   role: UserRole;
   createdAt: string;
   lastSeen?: string;
+  isFriend?: boolean; // Indicates if this user is a friend
 }
 
 export interface LoginRequest {
