@@ -1,26 +1,45 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       colors: {
         primary: {
-          50: '#f0f9ff',
-          100: '#e0f2fe',
-          200: '#bae6fd',
-          300: '#7dd3fc',
-          400: '#38bdf8',
-          500: '#0ea5e9',
-          600: '#0284c7',
-          700: '#0369a1',
-          800: '#075985',
-          900: '#0c4a6e',
+          DEFAULT: "#0084FF",
+          light: "#4DA3FF",
+          dark: "#006ED9",
+          50: "#E6F4FF",
+          100: "#BAE0FF",
+          200: "#91CAFF",
+          300: "#69B1FF",
+          400: "#4096FF",
+          500: "#0084FF",
+          600: "#006ED9",
+          700: "#0058B3",
+          800: "#00428C",
+          900: "#002C66",
         },
+        secondary: {
+          DEFAULT: "#F5F7FB",
+          light: "#FFFFFF",
+          dark: "#E4E9F0",
+        },
+        textPrimary: "#081C36",
+        textSecondary: "#5B6B79",
+        textTertiary: "#A0ABBF",
+      },
+      fontFamily: {
+        sans: [
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          "Roboto",
+          "Helvetica",
+          "Arial",
+          "sans-serif",
+        ],
       },
     },
   },
   plugins: [],
-}
+};

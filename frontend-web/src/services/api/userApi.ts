@@ -36,7 +36,7 @@ export const userApi = {
       email?: string;
       phoneNumber?: string;
       avatarUrl?: string;
-    }
+    },
   ): Promise<User> => {
     const response = await apiClient.put<User>(`/users/${id}/profile`, data);
     return response.data;
@@ -46,6 +46,21 @@ export const userApi = {
     const response = await apiClient.put<User>(`/users/${id}/status`, {
       status,
     });
+    return response.data;
+  },
+
+  getFriends: async (userId: string): Promise<User[]> => {
+    const response = await apiClient.get<User[]>(`/users/friends/${userId}`);
+    return response.data;
+  },
+
+  checkFriendship: async (
+    userId1: string,
+    userId2: string,
+  ): Promise<boolean> => {
+    const response = await apiClient.get<boolean>(
+      `/users/check-friendship/${userId1}/${userId2}`,
+    );
     return response.data;
   },
 };

@@ -60,4 +60,47 @@ public class User {
     
     @Column(name = "last_seen")
     private LocalDateTime lastSeen;
+    
+    // Authentication enhancement fields
+    @Column(name = "email_verified")
+    @Builder.Default
+    private Boolean emailVerified = false;
+    
+    @Column(name = "verification_token", length = 500)
+    private String verificationToken;
+    
+    @Column(name = "verification_token_expiry")
+    private LocalDateTime verificationTokenExpiry;
+    
+    @Column(name = "reset_token", length = 500)
+    private String resetToken;
+    
+    @Column(name = "reset_token_expiry")
+    private LocalDateTime resetTokenExpiry;
+    
+    @Column(name = "refresh_token", length = 500)
+    private String refreshToken;
+    
+    @Column(name = "refresh_token_expiry")
+    private LocalDateTime refreshTokenExpiry;
+    
+    @Column(name = "login_attempts")
+    @Builder.Default
+    private Integer loginAttempts = 0;
+    
+    @Column(name = "locked_until")
+    private LocalDateTime lockedUntil;
+    
+    public boolean isAccountLocked() {
+        return lockedUntil != null && lockedUntil.isAfter(LocalDateTime.now());
+    }
+    
+    public void incrementLoginAttempts() {
+        this.loginAttempts = (this.loginAttempts == null ? 0 : this.loginAttempts) + 1;
+    }
+    
+    public void resetLoginAttempts() {
+        this.loginAttempts = 0;
+        this.lockedUntil = null;
+    }
 }

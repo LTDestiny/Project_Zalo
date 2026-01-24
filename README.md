@@ -4,22 +4,43 @@ A comprehensive Zola messaging platform with hybrid PostgreSQL/DynamoDB architec
 
 ## Architecture Overview
 
+### Key Features
+
+- **Comprehensive Authentication**: Register, Login, Email Verification, Password Reset, Refresh Tokens
+- **Security**: JWT tokens, BCrypt password hashing, Account lockout protection
+- **Real-time Messaging**: WebSocket-based chat with delivery/read receipts
+- **Group Management**: Create/manage groups with role-based permissions
+- **Media Sharing**: Upload/download files with S3 storage
+- **User Management**: Profile updates, status tracking, friend connections
+- **Analytics**: User activity tracking and statistics
+
 ### Database Strategy
+
 - **PostgreSQL**: Relational data (users, groups, friendships, user activities)
+  - Enhanced with 30+ optimized indexes (partial, composite, GIN, full-text)
+  - Authentication columns (email_verified, tokens, login_attempts, locked_until)
 - **DynamoDB**: High-throughput data (messages, conversations, chatbot sessions, statistics)
 
 ### Technology Stack
 
 #### Backend
-- Java 17+ with Spring Boot 3.x
-- Spring Data JPA (PostgreSQL)
+
+- Java 17/21 with Spring Boot 3.4.1
+- Spring Data JPA (PostgreSQL 17.4+)
 - Spring Data DynamoDB
-- Spring Security + JWT
+- Spring Security + JWT Authentication
+  - Access tokens (15 min expiry)
+  - Refresh tokens (30 days expiry)
+  - Email verification
+  - Password reset
+  - Account lockout (5 failed attempts)
 - WebSocket for real-time messaging
 - AWS SDK (S3, DynamoDB)
 - Redis for caching
+- Flyway database migrations
 
 #### Frontend Web
+
 - React 18+ with TypeScript
 - Redux Toolkit for state management
 - Tailwind CSS + Shadcn/ui
@@ -28,12 +49,14 @@ A comprehensive Zola messaging platform with hybrid PostgreSQL/DynamoDB architec
 - Axios for API calls
 
 #### Frontend Mobile
+
 - React Native with TypeScript
 - React Navigation
 - Redux Toolkit
 - Native WebSocket support
 
 #### Infrastructure
+
 - AWS (EKS, RDS, DynamoDB, S3, ElastiCache)
 - Terraform for IaC
 - Kubernetes for orchestration
@@ -55,6 +78,7 @@ zola-platform/
 ## Features
 
 ### Core Features
+
 - Real-time messaging (1-1 and group chats)
 - User authentication & authorization
 - Friend management system
@@ -67,6 +91,7 @@ zola-platform/
 - Push notifications
 
 ### Technical Features
+
 - WebSocket for real-time communication
 - JWT-based authentication
 - File upload to AWS S3
@@ -78,6 +103,7 @@ zola-platform/
 ## Getting Started
 
 ### Prerequisites
+
 - Java 17+
 - Node.js 18+
 - Docker & Docker Compose
@@ -88,18 +114,21 @@ zola-platform/
 ### Local Development
 
 #### 1. Start Infrastructure
+
 ```bash
 cd infrastructure
 docker-compose up -d
 ```
 
 #### 2. Run Backend
+
 ```bash
 cd backend
 ./mvnw spring-boot:run
 ```
 
 #### 3. Run Frontend Web
+
 ```bash
 cd frontend-web
 npm install
@@ -107,6 +136,7 @@ npm run dev
 ```
 
 #### 4. Run Frontend Mobile
+
 ```bash
 cd frontend-mobile
 npm install
@@ -116,6 +146,7 @@ npx react-native run-android  # or run-ios
 ## Environment Variables
 
 ### Backend
+
 ```
 SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/zoladb
 SPRING_DATASOURCE_USERNAME=postgres
@@ -129,6 +160,7 @@ JWT_SECRET=your_jwt_secret
 ```
 
 ### Frontend
+
 ```
 VITE_API_BASE_URL=http://localhost:8080/api
 VITE_WS_URL=ws://localhost:8080/ws
@@ -137,6 +169,7 @@ VITE_WS_URL=ws://localhost:8080/ws
 ## API Documentation
 
 Once the backend is running, access Swagger UI at:
+
 ```
 http://localhost:8080/swagger-ui.html
 ```
@@ -144,12 +177,14 @@ http://localhost:8080/swagger-ui.html
 ## Testing
 
 ### Backend Tests
+
 ```bash
 cd backend
 ./mvnw test
 ```
 
 ### Frontend Tests
+
 ```bash
 cd frontend-web
 npm test
@@ -158,6 +193,7 @@ npm test
 ## Deployment
 
 ### Using Terraform
+
 ```bash
 cd infrastructure/terraform
 terraform init
@@ -166,6 +202,7 @@ terraform apply
 ```
 
 ### Using Kubernetes
+
 ```bash
 cd infrastructure/kubernetes
 kubectl apply -f .

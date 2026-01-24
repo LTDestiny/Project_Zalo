@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { userApi } from "@/services/api/userApi";
 import { User, UserStatus } from "@/types/user.types";
+import { UserProfileModal } from "./UserProfileModal";
 
 export const OnlineUsers: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
 
   useEffect(() => {
     fetchOnlineUsers();
@@ -67,7 +69,8 @@ export const OnlineUsers: React.FC = () => {
           {users.map((user) => (
             <div
               key={user.id}
-              className="flex items-center space-x-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50"
+              onClick={() => setSelectedUserId(user.id)}
+              className="flex items-center space-x-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition-all transform hover:scale-[1.02]"
             >
               <div className="relative">
                 <img
@@ -77,7 +80,7 @@ export const OnlineUsers: React.FC = () => {
                 />
                 <div
                   className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white ${getStatusColor(
-                    user.status
+                    user.status,
                   )}`}
                 />
               </div>
@@ -93,8 +96,8 @@ export const OnlineUsers: React.FC = () => {
                     user.status === UserStatus.ONLINE
                       ? "bg-green-100 text-green-800"
                       : user.status === UserStatus.AWAY
-                      ? "bg-yellow-100 text-yellow-800"
-                      : "bg-red-100 text-red-800"
+                        ? "bg-yellow-100 text-yellow-800"
+                        : "bg-red-100 text-red-800"
                   }`}
                 >
                   {user.status}
@@ -105,6 +108,13 @@ export const OnlineUsers: React.FC = () => {
         </div>
       ) : (
         <div className="text-center py-8 text-gray-500">No users online</div>
+      )}
+
+      {selectedUserId && (
+        <UserProfileModal
+          userId={selectedUserId}
+          onClose={() => setSelectedUserId(null)}
+        />
       )}
     </div>
   );

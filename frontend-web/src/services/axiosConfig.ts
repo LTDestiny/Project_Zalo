@@ -1,6 +1,7 @@
-import axios, { AxiosInstance } from 'axios';
+import axios, { AxiosInstance } from "axios";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api';
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/api";
 
 class ApiClient {
   private axiosInstance: AxiosInstance;
@@ -9,14 +10,14 @@ class ApiClient {
     this.axiosInstance = axios.create({
       baseURL: API_BASE_URL,
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     });
 
     // Request interceptor
     this.axiosInstance.interceptors.request.use(
       (config) => {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem("token");
         if (token) {
           config.headers.Authorization = `Bearer ${token}`;
         }
@@ -24,7 +25,7 @@ class ApiClient {
       },
       (error) => {
         return Promise.reject(error);
-      }
+      },
     );
 
     // Response interceptor
@@ -32,11 +33,23 @@ class ApiClient {
       (response) => response,
       (error) => {
         if (error.response?.status === 401) {
-          localStorage.removeItem('token');
-          window.location.href = '/login';
+          // Token expired or invalid
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
+
+          // Only redirect if not already on login/register pages
+          const currentPath = window.location.pathname;
+          if (
+            !currentPath.includes("/login") &&
+            !currentPath.includes("/register") &&
+            !currentPath.includes("/forgot-password") &&
+            !currentPath.includes("/reset-password")
+          ) {
+            window.location.href = "/login";
+          }
         }
         return Promise.reject(error);
-      }
+      },
     );
   }
 

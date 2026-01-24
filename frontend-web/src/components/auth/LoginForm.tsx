@@ -20,12 +20,27 @@ export const LoginForm: React.FC = () => {
     setError("");
     setLoading(true);
 
+    console.log("Submitting login form with data:", {
+      usernameOrEmail: formData.usernameOrEmail,
+      password: "***", // Don't log actual password
+    });
+
     try {
       const response = await authApi.login(formData);
+      console.log("Login successful:", response);
       dispatch(setCredentials(response));
       navigate("/chat");
     } catch (err: any) {
-      setError(err.response?.data?.message || "Login failed");
+      console.error("Login error:", err);
+      console.error("Error response:", err.response);
+
+      const errorMessage =
+        err.response?.data?.message ||
+        err.response?.data?.error ||
+        err.message ||
+        "Login failed. Please try again.";
+
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -70,6 +85,16 @@ export const LoginForm: React.FC = () => {
                 }
               />
             </div>
+          </div>
+
+          <div className="flex items-center justify-between">
+            <button
+              type="button"
+              onClick={() => navigate("/forgot-password")}
+              className="text-sm font-medium text-primary-600 hover:text-primary-500"
+            >
+              Quên mật khẩu?
+            </button>
           </div>
 
           <div>

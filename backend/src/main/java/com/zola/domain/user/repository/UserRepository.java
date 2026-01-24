@@ -29,4 +29,11 @@ public interface UserRepository extends JpaRepository<User, UUID> {
            "LOWER(u.email) LIKE LOWER(CONCAT('%', :query, '%')) OR " +
            "LOWER(u.phoneNumber) LIKE LOWER(CONCAT('%', :query, '%'))")
     List<User> searchUsers(@Param("query") String query);
+    
+    // Authentication enhancement queries
+    Optional<User> findByResetToken(String resetToken);
+    
+    Optional<User> findByVerificationToken(String verificationToken);
+    
+    Optional<User> findByRefreshToken(String refreshToken);
 }
