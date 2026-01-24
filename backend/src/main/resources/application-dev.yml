@@ -1,16 +1,17 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/ottdb
-    username: postgres
-    password: admin
+    url: jdbc:postgresql://localhost:5432/zoladb_dev
 
-  flyway:
-    enabled: false
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
 
+aws:
   dynamodb:
     endpoint: http://localhost:8000
 
 logging:
   level:
-    com.ott: DEBUG
+    com.zola: DEBUG
     org.springframework.web: DEBUG

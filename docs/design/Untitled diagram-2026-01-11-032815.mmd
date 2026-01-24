@@ -1,0 +1,203 @@
+---
+config:
+  layout: elk
+---
+classDiagram
+    class User {
+        <<PostgreSQL>>
+        +UUID id
+        +String username
+        +String email
+        +String password_hash
+        +String phone_number
+        +String avatar_url
+        +UserStatus status
+        +DateTime created_at
+        +DateTime updated_at
+        +DateTime last_seen
+    }
+
+    class Group {
+        <<PostgreSQL>>
+        +UUID id
+        +String name
+        +String description
+        +String avatar_url
+        +UUID created_by
+        +GroupType type
+        +DateTime created_at
+        +DateTime updated_at
+    }
+
+    class GroupMember {
+        <<PostgreSQL>>
+        +UUID id
+        +UUID group_id
+        +UUID user_id
+        +MemberRole role
+        +DateTime joined_at
+        +DateTime last_read_at
+    }
+
+    class Friendship {
+        <<PostgreSQL>>
+        +UUID id
+        +UUID user_id_1
+        +UUID user_id_2
+        +FriendshipStatus status
+        +DateTime created_at
+        +DateTime updated_at
+    }
+
+    class UserActivity {
+        <<PostgreSQL>>
+        +UUID id
+        +UUID user_id
+        +ActivityType type
+        +String metadata
+        +DateTime created_at
+    }
+    class Message {
+        <<DynamoDB>>
+        +String message_id [PK]
+        +String conversation_id [SK]
+        +String sender_id
+        +MessageType type
+        +String content
+        +String media_url
+        +Map metadata
+        +Long timestamp
+        +MessageStatus status
+        +List read_by
+        +String reply_to_message_id
+    }
+
+    class Conversation {
+        <<DynamoDB>>
+        +String conversation_id [PK]
+        +String type [SK]
+        +List participant_ids
+        +String last_message_id
+        +String last_message_preview
+        +Long last_message_time
+        +Map unread_counts
+        +Long created_at
+        +Long updated_at
+    }
+
+    class ChatbotSession {
+        <<DynamoDB>>
+        +String session_id [PK]
+        +String user_id
+        +String conversation_id
+        +List message_history
+        +Map context
+        +String ai_model
+        +Long created_at
+        +Long expires_at
+    }
+
+    class Emotion {
+        <<DynamoDB>>
+        +String emotion_id [PK]
+        +String message_id
+        +String user_id
+        +String emotion_type
+        +Long timestamp
+    }
+
+    class MediaMetadata {
+        <<DynamoDB>>
+        +String media_id [PK]
+        +String message_id
+        +String uploader_id
+        +String file_name
+        +String file_type
+        +Long file_size
+        +String storage_path
+        +String thumbnail_url
+        +Map processing_status
+        +Long uploaded_at
+    }
+
+    class UserStatistics {
+        <<DynamoDB>>
+        +String user_id [PK]
+        +String period [SK]
+        +Long messages_sent
+        +Long messages_received
+        +Long groups_joined
+        +Long active_conversations
+        +Map daily_activity
+        +Long last_updated
+    }
+
+    class NotificationQueue {
+        <<DynamoDB>>
+        +String notification_id [PK]
+        +String user_id [GSI-PK]
+        +String type
+        +String content
+        +Map payload
+        +Boolean is_read
+        +Long created_at
+        +Long ttl
+    }
+    User "1" --> "*" GroupMember : member_of
+    Group "1" --> "*" GroupMember : has_members
+    User "1" --> "*" Friendship : has_friends
+    User "1" --> "*" UserActivity : performs
+    User "1" --> "*" Message : sends
+    Conversation "1" --> "*" Message : contains
+    Message "1" --> "*" Emotion : receives
+    Message "1" --> "0..1" MediaMetadata : has_media
+    User "1" --> "*" ChatbotSession : initiates
+    User "1" --> "1" UserStatistics : tracks
+    class UserStatus {
+        <<enumeration>>
+        ONLINE
+        OFFLINE
+        AWAY
+        DO_NOT_DISTURB
+    }
+
+    class GroupType {
+        <<enumeration>>
+        PRIVATE
+        PUBLIC
+    }
+
+    class MemberRole {
+        <<enumeration>>
+        OWNER
+        ADMIN
+        MEMBER
+    }
+
+    class MessageType {
+        <<enumeration>>
+        TEXT
+        IMAGE
+        VIDEO
+        DOCUMENT
+        EMOTION
+        SYSTEM
+    }
+
+    class MessageStatus {
+        <<enumeration>>
+        SENDING
+        SENT
+        DELIVERED
+        READ
+        FAILED
+    }
+
+    class ActivityType {
+        <<enumeration>>
+        LOGIN
+        LOGOUT
+        MESSAGE_SENT
+        GROUP_CREATED
+        GROUP_JOINED
+    }

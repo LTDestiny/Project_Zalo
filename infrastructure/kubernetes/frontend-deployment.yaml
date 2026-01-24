@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ott-frontend
+  name: zola-frontend
   namespace: default
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: ott-frontend
+      app: zola-frontend
   template:
     metadata:
       labels:
-        app: ott-frontend
+        app: zola-frontend
     spec:
       containers:
       - name: frontend
-        image: ott-frontend-web:latest
+        image: zola-frontend-web:latest
         ports:
         - containerPort: 80
         resources:
@@ -29,12 +29,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ott-frontend-service
+  name: zola-frontend-service
   namespace: default
 spec:
   type: LoadBalancer
   selector:
-    app: ott-frontend
+    app: zola-frontend
   ports:
   - protocol: TCP
     port: 80

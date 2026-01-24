@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "OTT Platform",
-    "slug": "ott-platform",
+    "name": "Zola Platform",
+    "slug": "zola-platform",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -11,19 +11,17 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.ott.platform"
+      "bundleIdentifier": "com.zola.platform"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.ott.platform"
+      "package": "com.zola.platform"
     },
     "web": {
       "favicon": "./assets/favicon.png"

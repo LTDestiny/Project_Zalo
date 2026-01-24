@@ -1,11 +1,11 @@
-version: '3.8'
+version: "3.8"
 
 services:
   postgres:
     image: postgres:14-alpine
-    container_name: ott-postgres
+    container_name: zola-postgres
     environment:
-      POSTGRES_DB: ottdb
+      POSTGRES_DB: zoladb
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
     ports:
@@ -13,35 +13,35 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
     networks:
-      - ott-network
+      - zola-network
 
   dynamodb-local:
     image: amazon/dynamodb-local:latest
-    container_name: ott-dynamodb
+    container_name: zola-dynamodb
     command: "-jar DynamoDBLocal.jar -sharedDb -dbPath ./data"
     ports:
       - "8000:8000"
     volumes:
       - dynamodb-data:/home/dynamodblocal/data
     networks:
-      - ott-network
+      - zola-network
 
   redis:
     image: redis:7-alpine
-    container_name: ott-redis
+    container_name: zola-redis
     ports:
       - "6379:6379"
     networks:
-      - ott-network
+      - zola-network
 
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: ott-backend
+    container_name: zola-backend
     environment:
       SPRING_PROFILES_ACTIVE: dev
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/ottdb
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/zoladb
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: password
       REDIS_HOST: redis
@@ -56,24 +56,24 @@ services:
       - redis
       - dynamodb-local
     networks:
-      - ott-network
+      - zola-network
 
   frontend-web:
     build:
       context: ./frontend-web
       dockerfile: Dockerfile
-    container_name: ott-frontend-web
+    container_name: zola-frontend-web
     ports:
       - "80:80"
     depends_on:
       - backend
     networks:
-      - ott-network
+      - zola-network
 
 volumes:
   postgres-data:
   dynamodb-data:
 
 networks:
-  ott-network:
+  zola-network:
     driver: bridge
