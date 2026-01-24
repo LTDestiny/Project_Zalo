@@ -72,6 +72,16 @@ export const LoginForm: React.FC = () => {
             </div>
           </div>
 
+          <div className="flex items-center justify-between">
+            <button
+              type="button"
+              onClick={() => navigate("/forgot-password")}
+              className="text-sm font-medium text-primary-600 hover:text-primary-500"
+            >
+              Quên mật khẩu?
+            </button>
+          </div>
+
           <div>
             <button
               type="submit"
