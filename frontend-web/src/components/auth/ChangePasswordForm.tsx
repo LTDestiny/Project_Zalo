@@ -51,7 +51,7 @@ export const ChangePasswordForm: React.FC = () => {
     } catch (err: any) {
       setError(
         err.response?.data?.message ||
-          "Không thể đổi mật khẩu. Vui lòng kiểm tra mật khẩu cũ."
+          "Không thể đổi mật khẩu. Vui lòng kiểm tra mật khẩu cũ.",
       );
     } finally {
       setLoading(false);
@@ -65,9 +65,7 @@ export const ChangePasswordForm: React.FC = () => {
           <div className="p-2 bg-primary/10 rounded-lg mr-3">
             <Lock size={24} className="text-primary" strokeWidth={2.5} />
           </div>
-          <h2 className="text-2xl font-bold text-textPrimary">
-            Đổi mật khẩu
-          </h2>
+          <h2 className="text-2xl font-bold text-textPrimary">Đổi mật khẩu</h2>
         </div>
         <p className="text-sm text-textSecondary ml-14">
           Cập nhật mật khẩu của bạn để bảo mật tài khoản

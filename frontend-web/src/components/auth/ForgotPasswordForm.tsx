@@ -22,7 +22,7 @@ export const ForgotPasswordForm: React.FC = () => {
       setEmail("");
     } catch (err: any) {
       setError(
-        err.response?.data?.message || "Không thể gửi email. Vui lòng thử lại."
+        err.response?.data?.message || "Không thể gửi email. Vui lòng thử lại.",
       );
     } finally {
       setLoading(false);

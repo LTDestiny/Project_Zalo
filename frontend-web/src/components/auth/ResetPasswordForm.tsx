@@ -50,7 +50,7 @@ export const ResetPasswordForm: React.FC = () => {
     } catch (err: any) {
       setError(
         err.response?.data?.message ||
-          "Không thể đặt lại mật khẩu. Token có thể đã hết hạn."
+          "Không thể đặt lại mật khẩu. Token có thể đã hết hạn.",
       );
     } finally {
       setLoading(false);
@@ -144,7 +144,10 @@ export const ResetPasswordForm: React.FC = () => {
                   placeholder="Nhập lại mật khẩu mới"
                   value={formData.confirmPassword}
                   onChange={(e) =>
-                    setFormData({ ...formData, confirmPassword: e.target.value })
+                    setFormData({
+                      ...formData,
+                      confirmPassword: e.target.value,
+                    })
                   }
                 />
                 <button

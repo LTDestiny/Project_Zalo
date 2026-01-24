@@ -9,7 +9,7 @@ export const VerifyEmailPage: React.FC = () => {
   const token = searchParams.get("token") || "";
 
   const [status, setStatus] = useState<"loading" | "success" | "error">(
-    "loading"
+    "loading",
   );
   const [message, setMessage] = useState("");
 
@@ -30,7 +30,7 @@ export const VerifyEmailPage: React.FC = () => {
         setStatus("error");
         setMessage(
           err.response?.data?.message ||
-            "Không thể xác thực email. Token có thể đã hết hạn."
+            "Không thể xác thực email. Token có thể đã hết hạn.",
         );
       }
     };
@@ -45,7 +45,7 @@ export const VerifyEmailPage: React.FC = () => {
     } catch (err: any) {
       setMessage(
         err.response?.data?.message ||
-          "Không thể gửi lại email xác thực. Vui lòng đăng nhập để thử lại."
+          "Không thể gửi lại email xác thực. Vui lòng đăng nhập để thử lại.",
       );
     }
   };
@@ -75,11 +75,7 @@ export const VerifyEmailPage: React.FC = () => {
             )}
             {status === "error" && (
               <div className="p-3 bg-red-100 rounded-xl">
-                <XCircle
-                  size={40}
-                  className="text-red-600"
-                  strokeWidth={2.5}
-                />
+                <XCircle size={40} className="text-red-600" strokeWidth={2.5} />
               </div>
             )}
           </div>
