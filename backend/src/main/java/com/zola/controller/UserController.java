@@ -15,7 +15,6 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*", maxAge = 3600)
 public class UserController {
     
     private final UserService userService;
@@ -57,5 +56,17 @@ public class UserController {
     @GetMapping("/online")
     public ResponseEntity<List<UserDto>> getOnlineUsers() {
         return ResponseEntity.ok(userService.findByStatus(UserStatus.ONLINE));
+    }
+    
+    @GetMapping("/friends/{userId}")
+    public ResponseEntity<List<UserDto>> getFriends(@PathVariable UUID userId) {
+        return ResponseEntity.ok(userService.getFriends(userId));
+    }
+    
+    @GetMapping("/check-friendship/{userId1}/{userId2}")
+    public ResponseEntity<Boolean> checkFriendship(
+            @PathVariable UUID userId1,
+            @PathVariable UUID userId2) {
+        return ResponseEntity.ok(userService.areFriends(userId1, userId2));
     }
 }

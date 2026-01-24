@@ -1,9 +1,12 @@
 package com.zola.domain.user.service;
 
+import com.zola.domain.common.enums.FriendshipStatus;
 import com.zola.domain.common.enums.UserStatus;
 import com.zola.domain.user.dto.UpdateProfileRequest;
 import com.zola.domain.user.dto.UserDto;
+import com.zola.domain.user.entity.Friendship;
 import com.zola.domain.user.entity.User;
+import com.zola.domain.user.repository.FriendshipRepository;
 import com.zola.domain.user.repository.UserRepository;
 import com.zola.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -23,8 +27,9 @@ import java.util.stream.Collectors;
 public class UserService {
     
     private final UserRepository userRepository;
+    private final FriendshipRepository friendshipRepository;
     
-    @Cacheable(value = "users", key = "#id")
+    // @Cacheable(value = "users", key = "#id")
     public UserDto findById(UUID id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
@@ -43,7 +48,7 @@ public class UserService {
         return mapToDto(user);
     }
     
-    @CacheEvict(value = "users", key = "#id")
+    // @CacheEvict(value = "users", key = "#id")
     public UserDto updateUserStatus(UUID id, UserStatus status) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
@@ -125,5 +130,29 @@ public class UserService {
                 .createdAt(user.getCreatedAt())
                 .lastSeen(user.getLastSeen())
                 .build();
+    }
+    
+    public List<UserDto> getFriends(UUID userId) {
+        List<Friendship> friendships = friendshipRepository
+                .findFriendshipsByUserIdAndStatus(userId, FriendshipStatus.ACCEPTED);
+        
+        List<UUID> friendIds = new ArrayList<>();
+        for (Friendship friendship : friendships) {
+            if (friendship.getUserId1().equals(userId)) {
+                friendIds.add(friendship.getUserId2());
+            } else {
+                friendIds.add(friendship.getUserId1());
+            }
+        }
+        
+        return userRepository.findAllById(friendIds).stream()
+                .map(this::mapToDto)
+                .collect(Collectors.toList());
+    }
+    
+    public boolean areFriends(UUID userId1, UUID userId2) {
+        return friendshipRepository.findFriendshipBetweenUsers(userId1, userId2)
+                .map(friendship -> friendship.getStatus() == FriendshipStatus.ACCEPTED)
+                .orElse(false);
     }
 }
