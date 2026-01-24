@@ -15,16 +15,10 @@ import {
   Settings,
 } from "lucide-react";
 import { ChatRoom } from "./ChatRoom";
-
-interface ChatItem {
-  id: string;
-  name: string;
-  avatar?: string;
-  lastMessage: string;
-  timestamp: string;
-  unreadCount: number;
-  isOnline: boolean;
-}
+import { ChatList } from "./ChatList";
+import { ChatItem } from "@/types/chat.types";
+import { formatChatTimestamp } from "@/utils";
+import { useUserStatus } from "@/hooks";
 
 export const ChatLayout: React.FC = () => {
   const navigate = useNavigate();
@@ -38,22 +32,29 @@ export const ChatLayout: React.FC = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
 
-  // Update user status to ONLINE on mount
-  useEffect(() => {
-    if (user?.id) {
-      userApi.updateStatus(user.id, UserStatus.ONLINE).catch(console.error);
-    }
-  }, [user?.id]);
+  // Manage user status
+  useUserStatus();
 
   // Load users and create chat items
   useEffect(() => {
     const loadUsers = async () => {
       setLoading(true);
       try {
-        const allUsers = await userApi.getAllUsers();
-        const filteredUsers = allUsers.filter((u) => u.id !== user?.id);
+        if (!user?.id) return;
 
-        // Convert users to chat items (mock data for now)
+        const allUsers = await userApi.getAllUsers();
+        const filteredUsers = allUsers.filter((u) => u.id !== user.id);
+
+        // Get friends list
+        let friendsList: any[] = [];
+        try {
+          friendsList = await userApi.getFriends(user.id);
+        } catch (error) {
+          console.log("Friends list not available:", error);
+        }
+        const friendIds = new Set(friendsList.map((f) => f.id));
+
+        // Convert users to chat items
         const chatItems: ChatItem[] = filteredUsers.map((u) => ({
           id: u.id,
           name: u.displayName || u.username,
@@ -62,6 +63,7 @@ export const ChatLayout: React.FC = () => {
           timestamp: "Mới",
           unreadCount: 0,
           isOnline: u.status === UserStatus.ONLINE,
+          isFriend: friendIds.has(u.id),
         }));
         setChats(chatItems);
       } catch (error) {
@@ -110,15 +112,10 @@ export const ChatLayout: React.FC = () => {
     chat.name.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
-  const formatTimestamp = (timestamp: string) => {
-    if (timestamp === "Mới") return timestamp;
-    return timestamp;
-  };
-
   return (
     <div className="flex h-screen bg-gray-50">
       {/* Sidebar - Chat List */}
-      <div className="w-80 bg-white border-r border-gray-200 flex flex-col">
+      <div className="flex flex-col bg-white border-r border-gray-200 w-80">
         {/* Header */}
         <div className="p-4 border-b border-gray-200">
           <div className="flex items-center justify-between mb-4">
@@ -126,26 +123,26 @@ export const ChatLayout: React.FC = () => {
             <div className="relative">
               <button
                 onClick={() => setShowMenu(!showMenu)}
-                className="p-2 hover:bg-gray-100 rounded-full transition"
+                className="p-2 transition rounded-full hover:bg-gray-100"
               >
                 <MoreVertical className="w-5 h-5 text-gray-600" />
               </button>
 
               {showMenu && (
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-10">
+                <div className="absolute right-0 z-10 w-48 py-1 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg">
                   <button
                     onClick={() => {
                       navigate("/settings");
                       setShowMenu(false);
                     }}
-                    className="w-full px-4 py-2 text-left hover:bg-gray-50 flex items-center gap-2"
+                    className="flex items-center w-full gap-2 px-4 py-2 text-left hover:bg-gray-50"
                   >
                     <Settings className="w-4 h-4" />
                     Cài đặt
                   </button>
                   <button
                     onClick={handleLogout}
-                    className="w-full px-4 py-2 text-left hover:bg-gray-50 flex items-center gap-2 text-red-600"
+                    className="flex items-center w-full gap-2 px-4 py-2 text-left text-red-600 hover:bg-gray-50"
                   >
                     <LogOut className="w-4 h-4" />
                     Đăng xuất
@@ -157,29 +154,29 @@ export const ChatLayout: React.FC = () => {
 
           {/* Search Bar */}
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <Search className="absolute w-5 h-5 text-gray-400 transform -translate-y-1/2 left-3 top-1/2" />
             <input
               type="text"
               placeholder="Tìm kiếm"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full py-2 pl-10 pr-4 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
         </div>
 
         {/* Action Buttons */}
-        <div className="p-3 border-b border-gray-200 flex gap-2">
+        <div className="flex gap-2 p-3 border-b border-gray-200">
           <button
             onClick={handleAddFriend}
-            className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition"
+            className="flex items-center justify-center flex-1 gap-2 px-3 py-2 text-blue-600 transition rounded-lg bg-blue-50 hover:bg-blue-100"
           >
             <UserPlus className="w-5 h-5" />
             <span className="font-medium">Thêm bạn</span>
           </button>
           <button
             onClick={handleCreateGroup}
-            className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 transition"
+            className="flex items-center justify-center flex-1 gap-2 px-3 py-2 text-green-600 transition rounded-lg bg-green-50 hover:bg-green-100"
           >
             <UsersRound className="w-5 h-5" />
             <span className="font-medium">Tạo nhóm</span>
@@ -187,84 +184,15 @@ export const ChatLayout: React.FC = () => {
         </div>
 
         {/* Chat List */}
-        <div className="flex-1 overflow-y-auto">
-          {loading ? (
-            <div className="flex items-center justify-center h-32">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-            </div>
-          ) : filteredChats.length === 0 ? (
-            <div className="flex flex-col items-center justify-center h-full text-gray-500 px-6 text-center">
-              <MessageCircle className="w-12 h-12 mb-3 text-gray-300" />
-              <p className="text-sm">
-                {searchQuery
-                  ? "Không tìm thấy kết quả"
-                  : "Chưa có cuộc trò chuyện nào"}
-              </p>
-              <p className="text-xs mt-1">Nhấn "Thêm bạn" để bắt đầu</p>
-            </div>
-          ) : (
-            <div>
-              {filteredChats.map((chat) => (
-                <div
-                  key={chat.id}
-                  className={`flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition ${
-                    chatId === chat.id ? "bg-blue-50" : ""
-                  }`}
-                >
-                  {/* Avatar */}
-                  <div
-                    className="relative flex-shrink-0 cursor-pointer"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setSelectedUserId(chat.id);
-                    }}
-                    title="Xem hồ sơ"
-                  >
-                    {chat.avatar ? (
-                      <img
-                        src={chat.avatar}
-                        alt={chat.name}
-                        className="w-12 h-12 rounded-full object-cover hover:ring-2 hover:ring-primary-300 transition-all"
-                      />
-                    ) : (
-                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white font-semibold hover:ring-2 hover:ring-primary-300 transition-all">
-                        {chat.name.charAt(0).toUpperCase()}
-                      </div>
-                    )}
-                    {chat.isOnline && (
-                      <div className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-500 rounded-full border-2 border-white"></div>
-                    )}
-                  </div>
-
-                  {/* Chat Info */}
-                  <div
-                    className="flex-1 min-w-0 cursor-pointer"
-                    onClick={() => handleChatClick(chat.id)}
-                  >
-                    <div className="flex items-center justify-between mb-1">
-                      <h3 className="font-semibold text-gray-900 truncate">
-                        {chat.name}
-                      </h3>
-                      <span className="text-xs text-gray-500 flex-shrink-0 ml-2">
-                        {formatTimestamp(chat.timestamp)}
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <p className="text-sm text-gray-600 truncate">
-                        {chat.lastMessage}
-                      </p>
-                      {chat.unreadCount > 0 && (
-                        <span className="flex-shrink-0 ml-2 bg-red-500 text-white text-xs font-semibold rounded-full w-5 h-5 flex items-center justify-center">
-                          {chat.unreadCount}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+        <ChatList
+          loading={loading}
+          filteredChats={filteredChats}
+          searchQuery={searchQuery}
+          chatId={chatId}
+          onChatClick={handleChatClick}
+          onAvatarClick={setSelectedUserId}
+          formatTimestamp={formatChatTimestamp}
+        />
 
         {/* User Profile Footer */}
         <div className="p-3 border-t border-gray-200 bg-gray-50">
@@ -278,10 +206,10 @@ export const ChatLayout: React.FC = () => {
                 <img
                   src={user.avatarUrl}
                   alt={user.displayName || user?.username}
-                  className="w-10 h-10 rounded-full object-cover hover:ring-2 hover:ring-primary-300 transition-all"
+                  className="object-cover w-10 h-10 transition-all rounded-full hover:ring-2 hover:ring-primary-300"
                 />
               ) : (
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center text-white font-semibold hover:ring-2 hover:ring-primary-300 transition-all">
+                <div className="flex items-center justify-center w-10 h-10 font-semibold text-white transition-all rounded-full bg-gradient-to-br from-purple-400 to-purple-600 hover:ring-2 hover:ring-primary-300">
                   {user?.username?.charAt(0).toUpperCase()}
                 </div>
               )}
@@ -297,13 +225,13 @@ export const ChatLayout: React.FC = () => {
       </div>
 
       {/* Main Chat Area */}
-      <div className="flex-1 flex flex-col bg-white">
+      <div className="flex flex-col flex-1 bg-white">
         {chatId ? (
           <ChatRoom />
         ) : (
-          <div className="flex-1 flex flex-col items-center justify-center text-gray-400">
+          <div className="flex flex-col items-center justify-center flex-1 text-gray-400">
             <MessageCircle className="w-24 h-24 mb-4 text-gray-300" />
-            <h2 className="text-xl font-semibold text-gray-600 mb-2">
+            <h2 className="mb-2 text-xl font-semibold text-gray-600">
               Chào mừng đến với Zola Chat
             </h2>
             <p className="text-gray-500">
