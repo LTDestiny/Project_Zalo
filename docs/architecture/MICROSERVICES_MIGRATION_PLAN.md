@@ -30,14 +30,20 @@ zola-platform (Spring Boot Monolith)
 
 #### Current Tech Stack
 
-- Spring Boot 3.4.1
-- Java 17
-- PostgreSQL (RDS)
-- DynamoDB
-- Redis (ElastiCache)
-- AWS S3
-- WebSocket (STOMP)
-- JWT Authentication
+- **Framework**: Spring Boot 3.4.1
+- **Java**: Version 17/21
+- **Databases**: 
+  - PostgreSQL 17.4+ (Users, Groups, Friendships, Activities)
+  - DynamoDB (Messages, Conversations, Chatbot Sessions)
+  - Redis (Caching, Session Management)
+- **Storage**: AWS S3 (Avatars, Messages, Shared Files, Analytics)
+- **Real-time**: WebSocket (STOMP protocol)
+- **Security**: JWT Authentication (15 min access + 30 day refresh tokens)
+- **Migrations**: Flyway (v2 applied with enhanced schema)
+- **Password**: BCrypt hashing (strength 10)
+
+**Database Schema Version**: v2  
+**Authentication**: Enhanced with email verification, password reset, refresh tokens, account lockout
 
 ---
 
@@ -55,18 +61,41 @@ Chúng ta sẽ chia hệ thống thành các bounded contexts/domains sau:
 - User profile management
 - User status tracking (online/offline/away)
 - JWT token management
+- Email verification
+- Password reset
+- Account security (lockout, refresh tokens)
 
 **Data Storage:**
 
-- **PostgreSQL**: User accounts, profiles
-- **Redis**: Session cache, user status
+- **PostgreSQL**: User accounts, profiles, authentication tokens
+- **Redis**: Session cache, user status, refresh token cache
 - **S3**: Avatar images
 
 **Technology:**
 
 - Spring Boot
-- Spring Security
+- Spring Security with JWT
 - Redis for session management
+- Email service integration (SendGrid/AWS SES)
+
+**Recent Enhancements (January 2025):**
+
+- ✅ Comprehensive authentication system implemented
+- ✅ Email verification with 24-hour token expiry
+- ✅ Password reset with 1-hour token expiry
+- ✅ Refresh token mechanism (30-day expiry)
+- ✅ Account lockout after 5 failed login attempts
+- ✅ 9 new database fields for security features
+- ✅ 10 authentication endpoints (register, login, logout, refresh, verify, etc.)
+
+**Security Features:**
+
+- BCrypt password hashing (strength 10)
+- JWT access tokens (15 min expiry)
+- Refresh tokens stored in database (30 days)
+- Account lockout mechanism (15 min after 5 failed attempts)
+- Email verification required for sensitive operations
+- Token invalidation on password change
 
 ---
 
@@ -398,6 +427,9 @@ Buckets:
 3. ✅ Configure Lambda for image processing
 4. ✅ Setup API Gateway
 5. ✅ Create separate databases for each service
+6. ✅ **COMPLETED**: Enhanced authentication system with 10 endpoints
+7. ✅ **COMPLETED**: Database schema optimization (30+ indexes)
+8. ✅ **COMPLETED**: Sample data generation (20 users, 10 groups, 28 friendships)
 6. ✅ Setup service mesh (Istio/Linkerd)
 
 **Deliverables:**
@@ -728,6 +760,7 @@ GitHub → GitHub Actions → Build Docker Images → ECR
 
 ---
 
-**Last Updated:** January 23, 2026  
-**Version:** 1.0  
-**Owner:** Architecture Team
+**Last Updated:** January 2025  
+**Version:** 1.1  
+**Owner:** Architecture Team  
+**Recent Changes**: Enhanced authentication system, database optimization, comprehensive documentation
