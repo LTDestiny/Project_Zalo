@@ -1,9 +1,11 @@
 # Authentication API Documentation
 
 ## Tổng quan
+
 Hệ thống authentication toàn diện với JWT, hỗ trợ refresh token, email verification, password reset, và account lockout.
 
 ## Base URL
+
 ```
 http://localhost:8080/api
 ```
@@ -11,6 +13,7 @@ http://localhost:8080/api
 ## Authentication Endpoints
 
 ### 1. Register (Đăng ký)
+
 ```http
 POST /auth/register
 Content-Type: application/json
@@ -24,6 +27,7 @@ Content-Type: application/json
 ```
 
 **Response:**
+
 ```json
 {
   "id": "uuid",
@@ -42,6 +46,7 @@ Content-Type: application/json
 ---
 
 ### 2. Login (Đăng nhập)
+
 ```http
 POST /auth/login
 Content-Type: application/json
@@ -53,6 +58,7 @@ Content-Type: application/json
 ```
 
 **Response:**
+
 ```json
 {
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
@@ -67,18 +73,21 @@ Content-Type: application/json
 ```
 
 **Errors:**
+
 - `401 Unauthorized`: Sai username/password
 - `401 Unauthorized`: Account is locked (sau 5 lần đăng nhập sai, khóa 30 phút)
 
 ---
 
 ### 3. Logout (Đăng xuất)
+
 ```http
 POST /auth/logout
 Authorization: Bearer <access_token>
 ```
 
 **Response:**
+
 ```
 200 OK
 ```
@@ -86,12 +95,14 @@ Authorization: Bearer <access_token>
 ---
 
 ### 4. Get Current User (Lấy thông tin user hiện tại)
+
 ```http
 GET /auth/me
 Authorization: Bearer <access_token>
 ```
 
 **Response:**
+
 ```json
 {
   "id": "uuid",
@@ -108,6 +119,7 @@ Authorization: Bearer <access_token>
 ---
 
 ### 5. Refresh Token (Gia hạn token)
+
 ```http
 POST /auth/refresh-token
 Content-Type: application/json
@@ -118,6 +130,7 @@ Content-Type: application/json
 ```
 
 **Response:**
+
 ```json
 {
   "accessToken": "new_access_token...",
@@ -131,6 +144,7 @@ Content-Type: application/json
 ---
 
 ### 6. Change Password (Đổi mật khẩu)
+
 ```http
 POST /auth/change-password
 Authorization: Bearer <access_token>
@@ -144,6 +158,7 @@ Content-Type: application/json
 ```
 
 **Response:**
+
 ```json
 {
   "message": "Password changed successfully"
@@ -151,12 +166,14 @@ Content-Type: application/json
 ```
 
 **Errors:**
+
 - `401 Unauthorized`: Current password is incorrect
 - `400 Bad Request`: Passwords do not match
 
 ---
 
 ### 7. Forgot Password (Quên mật khẩu)
+
 ```http
 POST /auth/forgot-password
 Content-Type: application/json
@@ -167,6 +184,7 @@ Content-Type: application/json
 ```
 
 **Response:**
+
 ```json
 {
   "message": "Password reset email sent"
@@ -178,6 +196,7 @@ Content-Type: application/json
 ---
 
 ### 8. Reset Password (Reset mật khẩu với token)
+
 ```http
 POST /auth/reset-password
 Content-Type: application/json
@@ -190,6 +209,7 @@ Content-Type: application/json
 ```
 
 **Response:**
+
 ```json
 {
   "message": "Password reset successfully"
@@ -197,6 +217,7 @@ Content-Type: application/json
 ```
 
 **Errors:**
+
 - `400 Bad Request`: Invalid reset token
 - `400 Bad Request`: Reset token has expired
 - `400 Bad Request`: Passwords do not match
@@ -204,6 +225,7 @@ Content-Type: application/json
 ---
 
 ### 9. Verify Email (Xác thực email)
+
 ```http
 POST /auth/verify-email
 Content-Type: application/json
@@ -214,6 +236,7 @@ Content-Type: application/json
 ```
 
 **Response:**
+
 ```json
 {
   "message": "Email verified successfully"
@@ -221,17 +244,20 @@ Content-Type: application/json
 ```
 
 **Errors:**
+
 - `400 Bad Request`: Invalid verification token
 - `400 Bad Request`: Verification token has expired
 
 ---
 
 ### 10. Resend Verification Email (Gửi lại email xác thực)
+
 ```http
 POST /auth/resend-verification?email=john@example.com
 ```
 
 **Response:**
+
 ```json
 {
   "message": "Verification email sent"
@@ -239,6 +265,7 @@ POST /auth/resend-verification?email=john@example.com
 ```
 
 **Errors:**
+
 - `400 Bad Request`: Email not found
 - `400 Bad Request`: Email already verified
 
@@ -247,6 +274,7 @@ POST /auth/resend-verification?email=john@example.com
 ## Security Features
 
 ### 1. Account Lockout
+
 - Sau **5 lần** đăng nhập sai, tài khoản sẽ bị khóa
 - Thời gian khóa: **30 phút**
 - Có thể config trong `application.yml`:
@@ -257,17 +285,20 @@ POST /auth/resend-verification?email=john@example.com
   ```
 
 ### 2. Token Expiration
+
 - **Access Token**: Thời hạn ngắn (mặc định trong `application.yml`)
 - **Refresh Token**: 30 ngày
 - **Reset Token**: 1 giờ
 - **Verification Token**: 24 giờ
 
 ### 3. Password Requirements
+
 - Minimum length: 6 characters
 - Maximum length: 50 characters
 - Được hash với BCrypt
 
 ### 4. Email Verification
+
 - User mới đăng ký sẽ có `emailVerified = false`
 - Cần verify email trước khi sử dụng các chức năng (có thể implement check này sau)
 
@@ -276,11 +307,12 @@ POST /auth/resend-verification?email=john@example.com
 ## Configuration
 
 ### application.yml
+
 ```yaml
 jwt:
   secret: your-secret-key-here
-  expiration-ms: 86400000        # 24 hours
-  refresh-expiration-ms: 2592000000  # 30 days
+  expiration-ms: 86400000 # 24 hours
+  refresh-expiration-ms: 2592000000 # 30 days
 
 auth:
   max-login-attempts: 5
@@ -292,6 +324,7 @@ auth:
 ## Database Schema Changes
 
 Migration V3 đã thêm các cột sau vào bảng `users`:
+
 - `email_verified` (boolean)
 - `verification_token` (varchar 500)
 - `verification_token_expiry` (timestamp)
@@ -330,6 +363,7 @@ Migration V3 đã thêm các cột sau vào bảng `users`:
 ## Error Responses
 
 Tất cả errors đều trả về format:
+
 ```json
 {
   "timestamp": "2026-01-24T09:00:00",
@@ -341,6 +375,7 @@ Tất cả errors đều trả về format:
 ```
 
 Common status codes:
+
 - `200 OK`: Success
 - `201 Created`: Resource created successfully
 - `400 Bad Request`: Invalid input
@@ -354,6 +389,7 @@ Common status codes:
 ## Testing với cURL
 
 ### Register
+
 ```bash
 curl -X POST http://localhost:8080/api/auth/register \
   -H "Content-Type: application/json" \
@@ -366,6 +402,7 @@ curl -X POST http://localhost:8080/api/auth/register \
 ```
 
 ### Login
+
 ```bash
 curl -X POST http://localhost:8080/api/auth/login \
   -H "Content-Type: application/json" \
@@ -376,12 +413,14 @@ curl -X POST http://localhost:8080/api/auth/login \
 ```
 
 ### Get Current User
+
 ```bash
 curl -X GET http://localhost:8080/api/auth/me \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
 ```
 
 ### Change Password
+
 ```bash
 curl -X POST http://localhost:8080/api/auth/change-password \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
