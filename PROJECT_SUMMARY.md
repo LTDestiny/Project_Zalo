@@ -80,13 +80,16 @@ zola-platform/
 ## 🎯 Implemented Features
 
 ### Backend (Spring Boot)
+
 ✅ **PostgreSQL Entities**
+
 - User management with status tracking
 - Group chat with roles (Owner, Admin, Member)
 - Friendship system
 - User activity logging
 
 ✅ **DynamoDB Models**
+
 - High-throughput message storage
 - Conversation management
 - Chatbot session tracking
@@ -96,6 +99,7 @@ zola-platform/
 - Notification queue with TTL
 
 ✅ **Core Services**
+
 - User service with caching
 - Repository pattern for both databases
 - JWT authentication with JwtTokenProvider
@@ -103,6 +107,7 @@ zola-platform/
 - WebSocket configuration for real-time
 
 ✅ **Configuration**
+
 - Multi-profile support (dev, prod)
 - DynamoDB configuration with local support
 - Redis caching setup
@@ -110,47 +115,59 @@ zola-platform/
 - WebSocket with STOMP
 
 ### Frontend Web (React + TypeScript)
+
 ✅ **State Management**
+
 - Redux Toolkit slices (auth, chat, group)
 - Centralized store configuration
 
 ✅ **API Integration**
+
 - Axios client with interceptors
 - JWT token management
 - Type-safe API clients
 
 ✅ **UI Components**
+
 - Login form with validation
 - Responsive design with Tailwind CSS
 - Route configuration with React Router
 
 ✅ **Build & Deploy**
+
 - Vite for fast development
 - Docker containerization
 - TypeScript for type safety
 
 ### Frontend Mobile (React Native)
+
 ✅ **Navigation**
+
 - Stack navigator setup
 - Auth flow screens
 
 ✅ **Components**
+
 - Login screen with native styling
 - AsyncStorage for token persistence
 - API client configuration
 
 ✅ **Configuration**
+
 - Expo framework setup
 - TypeScript support
 - iOS and Android support
 
 ### Infrastructure
+
 ✅ **Docker**
+
 - Multi-service docker-compose
 - PostgreSQL, DynamoDB Local, Redis
 - Backend and frontend containers
 
 ✅ **Terraform**
+
 - VPC and networking modules
 - RDS PostgreSQL setup
 - DynamoDB tables with GSIs
@@ -159,12 +176,14 @@ zola-platform/
 - EKS cluster
 
 ✅ **Kubernetes**
+
 - Backend deployment with health checks
 - Frontend deployment
 - Service configurations
 - Resource limits
 
 ✅ **CI/CD**
+
 - GitHub Actions workflows
 - Automated testing
 - Docker image building
@@ -175,6 +194,7 @@ zola-platform/
 ## 🗄️ Database Design
 
 ### PostgreSQL (Relational Data)
+
 - **users**: User accounts and profiles (11 indexes)
   - Authentication fields: email_verified, verification_token, reset_token, refresh_token, login_attempts, locked_until
   - Security: BCrypt password hashing, JWT-based authentication, account lockout mechanism
@@ -187,6 +207,7 @@ zola-platform/
 **Total**: 5 tables, 30+ optimized indexes, v2 schema with 20 sample users
 
 ### DynamoDB (High-Throughput Data)
+
 - **Messages**: Real-time messaging with GSIs
 - **Conversations**: Chat metadata
 - **ChatbotSessions**: AI conversation context
@@ -202,17 +223,20 @@ zola-platform/
 ### Local Development
 
 #### 1. Start Infrastructure
+
 ```bash
 cd infrastructure
 docker-compose up -d
 ```
 
 This starts:
+
 - PostgreSQL on port 5432
 - DynamoDB Local on port 8000
 - Redis on port 6379
 
 #### 2. Run Backend
+
 ```bash
 cd backend
 ./mvnw spring-boot:run
@@ -221,6 +245,7 @@ cd backend
 Backend runs on: http://localhost:8080
 
 #### 3. Run Frontend Web
+
 ```bash
 cd frontend-web
 npm install
@@ -230,6 +255,7 @@ npm run dev
 Frontend runs on: http://localhost:3000
 
 #### 4. Run Frontend Mobile
+
 ```bash
 cd frontend-mobile
 npm install
@@ -241,6 +267,7 @@ npx expo start
 ## 🔐 Environment Variables
 
 ### Backend (.env or application.yml)
+
 ```env
 SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/zoladb
 SPRING_DATASOURCE_USERNAME=postgres
@@ -254,6 +281,7 @@ JWT_SECRET=your_jwt_secret_min_256_bits
 ```
 
 ### Frontend Web (.env)
+
 ```env
 VITE_API_BASE_URL=http://localhost:8080/api
 VITE_WS_URL=ws://localhost:8080/ws
@@ -264,6 +292,7 @@ VITE_WS_URL=ws://localhost:8080/ws
 ## 📦 Dependencies
 
 ### Backend (Maven)
+
 - Spring Boot 3.2.0
 - Spring Data JPA
 - Spring Security
@@ -275,6 +304,7 @@ VITE_WS_URL=ws://localhost:8080/ws
 - Lombok
 
 ### Frontend Web (NPM)
+
 - React 18
 - TypeScript
 - Redux Toolkit
@@ -285,6 +315,7 @@ VITE_WS_URL=ws://localhost:8080/ws
 - STOMP WebSocket
 
 ### Frontend Mobile (NPM)
+
 - React Native
 - Expo
 - React Navigation
@@ -297,6 +328,7 @@ VITE_WS_URL=ws://localhost:8080/ws
 ## 🔄 Next Steps for Development
 
 ### Backend Enhancements
+
 1. Implement AuthService with password hashing
 2. Add more controllers (MessageController, GroupController)
 3. Implement WebSocket message broker
@@ -305,6 +337,7 @@ VITE_WS_URL=ws://localhost:8080/ws
 6. Add comprehensive unit tests
 
 ### Frontend Web Enhancements
+
 1. Create ChatWindow component
 2. Implement MessageInput with emoji picker
 3. Add GroupList and GroupDetail components
@@ -314,6 +347,7 @@ VITE_WS_URL=ws://localhost:8080/ws
 7. Create Statistics dashboard
 
 ### Frontend Mobile Enhancements
+
 1. Complete RegisterScreen
 2. Implement ChatListScreen with FlatList
 3. Create ChatScreen for conversations
@@ -322,6 +356,7 @@ VITE_WS_URL=ws://localhost:8080/ws
 6. Add offline support
 
 ### DevOps
+
 1. Set up AWS account and resources
 2. Configure secrets in GitHub
 3. Create ECR repositories
@@ -337,6 +372,7 @@ Full API documentation is available in:
 `docs/design/api-design.md`
 
 Key endpoints:
+
 - `POST /api/auth/register` - Register user
 - `POST /api/auth/login` - Login
 - `GET /api/users/{id}` - Get user
@@ -349,20 +385,24 @@ Key endpoints:
 ## 🏗️ Architecture Highlights
 
 ### Hybrid Database Strategy
+
 - **PostgreSQL**: ACID transactions for user data
 - **DynamoDB**: Unlimited scale for messages
 
 ### Real-time Communication
+
 - WebSocket with STOMP protocol
 - Redis pub/sub for multi-instance sync
 
 ### Scalability
+
 - Stateless backend (JWT tokens)
 - Redis caching layer
 - DynamoDB auto-scaling
 - Kubernetes horizontal scaling
 
 ### Security
+
 - JWT authentication
 - Password hashing (to be implemented)
 - CORS configuration

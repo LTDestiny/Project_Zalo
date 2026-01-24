@@ -14,6 +14,7 @@ This document outlines the complete REST API design for the Zola Platform. The A
 ## API Architecture
 
 ### Technology Stack
+
 - **Framework**: Spring Boot 3.4.1
 - **Security**: Spring Security with JWT
 - **Validation**: Jakarta Bean Validation
@@ -23,6 +24,7 @@ This document outlines the complete REST API design for the Zola Platform. The A
 ### Response Format
 
 #### Success Response
+
 ```json
 {
   "id": "uuid",
@@ -32,6 +34,7 @@ This document outlines the complete REST API design for the Zola Platform. The A
 ```
 
 #### Error Response
+
 ```json
 {
   "timestamp": "2025-01-15T10:30:00",
@@ -43,6 +46,7 @@ This document outlines the complete REST API design for the Zola Platform. The A
 ```
 
 ### HTTP Status Codes
+
 - `200 OK`: Successful GET, PUT requests
 - `201 Created`: Successful POST requests
 - `204 No Content`: Successful DELETE requests
@@ -67,6 +71,7 @@ This document outlines the complete REST API design for the Zola Platform. The A
 **Description**: Creates a new user account and sends email verification.
 
 **Request Body**:
+
 ```json
 {
   "username": "john_doe",
@@ -77,12 +82,14 @@ This document outlines the complete REST API design for the Zola Platform. The A
 ```
 
 **Validation**:
+
 - `username`: 3-50 characters, alphanumeric with underscores
 - `email`: Valid email format
 - `password`: Minimum 8 characters
 - `phoneNumber`: Optional, valid phone format
 
 **Success Response** (201 Created):
+
 ```json
 {
   "id": "550e8400-e29b-41d4-a716-446655440000",
@@ -99,6 +106,7 @@ This document outlines the complete REST API design for the Zola Platform. The A
 ```
 
 **Error Responses**:
+
 - `409 Conflict`: Username or email already exists
 - `400 Bad Request`: Invalid request data
 
@@ -113,6 +121,7 @@ This document outlines the complete REST API design for the Zola Platform. The A
 **Description**: Authenticates user and returns access token with refresh token.
 
 **Request Body**:
+
 ```json
 {
   "username": "john_doe",
@@ -121,6 +130,7 @@ This document outlines the complete REST API design for the Zola Platform. The A
 ```
 
 **Success Response** (200 OK):
+
 ```json
 {
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
@@ -135,16 +145,19 @@ This document outlines the complete REST API design for the Zola Platform. The A
 ```
 
 **Token Details**:
+
 - `token`: JWT access token (expires in 15 minutes)
 - `refreshToken`: UUID refresh token (expires in 30 days)
 - `expiresIn`: Token expiration in seconds
 
 **Error Responses**:
+
 - `401 Unauthorized`: Invalid credentials
 - `423 Locked`: Account locked due to failed login attempts (5 attempts → 15 min lock)
 - `403 Forbidden`: Email not verified
 
 **Security Features**:
+
 - Failed login attempts counter
 - Account lockout after 5 failed attempts (15 minutes)
 - Login attempts reset after successful login
@@ -160,11 +173,13 @@ This document outlines the complete REST API design for the Zola Platform. The A
 **Description**: Invalidates current refresh token and logs out user.
 
 **Request Headers**:
+
 ```
 Authorization: Bearer <access_token>
 ```
 
 **Success Response** (200 OK):
+
 ```json
 {
   "message": "Logged out successfully"
@@ -182,11 +197,13 @@ Authorization: Bearer <access_token>
 **Description**: Retrieves authenticated user's profile information.
 
 **Request Headers**:
+
 ```
 Authorization: Bearer <access_token>
 ```
 
 **Success Response** (200 OK):
+
 ```json
 {
   "id": "550e8400-e29b-41d4-a716-446655440000",
@@ -214,6 +231,7 @@ Authorization: Bearer <access_token>
 **Description**: Generates new access token using refresh token.
 
 **Request Body**:
+
 ```json
 {
   "refreshToken": "550e8400-e29b-41d4-a716-446655440001"
@@ -221,6 +239,7 @@ Authorization: Bearer <access_token>
 ```
 
 **Success Response** (200 OK):
+
 ```json
 {
   "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
@@ -231,10 +250,12 @@ Authorization: Bearer <access_token>
 ```
 
 **Error Responses**:
+
 - `401 Unauthorized`: Invalid or expired refresh token
 - `400 Bad Request`: Missing refresh token
 
 **Notes**:
+
 - Generates new access token (15 min) and refresh token (30 days)
 - Old refresh token is invalidated
 - Refresh tokens are stored in database
@@ -250,11 +271,13 @@ Authorization: Bearer <access_token>
 **Description**: Changes authenticated user's password.
 
 **Request Headers**:
+
 ```
 Authorization: Bearer <access_token>
 ```
 
 **Request Body**:
+
 ```json
 {
   "currentPassword": "OldPass123!",
@@ -263,10 +286,12 @@ Authorization: Bearer <access_token>
 ```
 
 **Validation**:
+
 - `currentPassword`: Required, must match current password
 - `newPassword`: Minimum 8 characters, must be different from current
 
 **Success Response** (200 OK):
+
 ```json
 {
   "message": "Password changed successfully"
@@ -274,10 +299,12 @@ Authorization: Bearer <access_token>
 ```
 
 **Error Responses**:
+
 - `400 Bad Request`: Current password incorrect
 - `400 Bad Request`: New password same as current password
 
 **Security Actions**:
+
 - Invalidates all existing refresh tokens
 - Requires re-authentication after password change
 
@@ -292,6 +319,7 @@ Authorization: Bearer <access_token>
 **Description**: Sends password reset email with token.
 
 **Request Body**:
+
 ```json
 {
   "email": "john@example.com"
@@ -299,6 +327,7 @@ Authorization: Bearer <access_token>
 ```
 
 **Success Response** (200 OK):
+
 ```json
 {
   "message": "Password reset email sent"
@@ -306,6 +335,7 @@ Authorization: Bearer <access_token>
 ```
 
 **Notes**:
+
 - Always returns success (prevents email enumeration)
 - Reset token expires in 1 hour
 - Email contains reset link: `http://app.zola.com/reset-password?token={token}`
@@ -321,6 +351,7 @@ Authorization: Bearer <access_token>
 **Description**: Resets password using reset token from email.
 
 **Request Body**:
+
 ```json
 {
   "token": "550e8400-e29b-41d4-a716-446655440003",
@@ -329,10 +360,12 @@ Authorization: Bearer <access_token>
 ```
 
 **Validation**:
+
 - `token`: Required, must be valid and not expired
 - `newPassword`: Minimum 8 characters
 
 **Success Response** (200 OK):
+
 ```json
 {
   "message": "Password reset successfully"
@@ -340,9 +373,11 @@ Authorization: Bearer <access_token>
 ```
 
 **Error Responses**:
+
 - `400 Bad Request`: Invalid or expired token
 
 **Security Actions**:
+
 - Invalidates reset token after use
 - Invalidates all existing refresh tokens
 - Resets failed login attempts counter
@@ -358,6 +393,7 @@ Authorization: Bearer <access_token>
 **Description**: Verifies user's email address using verification token.
 
 **Request Body**:
+
 ```json
 {
   "token": "550e8400-e29b-41d4-a716-446655440004"
@@ -365,6 +401,7 @@ Authorization: Bearer <access_token>
 ```
 
 **Success Response** (200 OK):
+
 ```json
 {
   "message": "Email verified successfully"
@@ -372,10 +409,12 @@ Authorization: Bearer <access_token>
 ```
 
 **Error Responses**:
+
 - `400 Bad Request`: Invalid or expired token
 - `400 Bad Request`: Email already verified
 
 **Notes**:
+
 - Verification token expires in 24 hours
 - Sets `email_verified` to true
 - Removes verification token from database
@@ -391,6 +430,7 @@ Authorization: Bearer <access_token>
 **Description**: Resends email verification link.
 
 **Request Body**:
+
 ```json
 {
   "email": "john@example.com"
@@ -398,6 +438,7 @@ Authorization: Bearer <access_token>
 ```
 
 **Success Response** (200 OK):
+
 ```json
 {
   "message": "Verification email sent"
@@ -405,6 +446,7 @@ Authorization: Bearer <access_token>
 ```
 
 **Notes**:
+
 - Generates new verification token (old one invalidated)
 - Rate limited to prevent abuse (1 per minute per email)
 
@@ -421,9 +463,11 @@ Authorization: Bearer <access_token>
 **Description**: Retrieves user profile by UUID.
 
 **Path Parameters**:
+
 - `id`: User UUID
 
 **Success Response** (200 OK):
+
 ```json
 {
   "id": "550e8400-e29b-41d4-a716-446655440000",
@@ -439,6 +483,7 @@ Authorization: Bearer <access_token>
 ```
 
 **Error Responses**:
+
 - `404 Not Found`: User not found
 
 ---
@@ -452,11 +497,13 @@ Authorization: Bearer <access_token>
 **Description**: Retrieves user profile by username.
 
 **Path Parameters**:
+
 - `username`: User's unique username
 
 **Success Response**: Same as Get User By ID (200 OK)
 
 **Error Responses**:
+
 - `404 Not Found`: User not found
 
 ---
@@ -470,6 +517,7 @@ Authorization: Bearer <access_token>
 **Description**: Retrieves all users in the system.
 
 **Success Response** (200 OK):
+
 ```json
 [
   {
@@ -490,6 +538,7 @@ Authorization: Bearer <access_token>
 ```
 
 **Notes**:
+
 - Consider pagination for large datasets (future enhancement)
 
 ---
@@ -503,11 +552,13 @@ Authorization: Bearer <access_token>
 **Description**: Searches users by username or email.
 
 **Query Parameters**:
+
 - `query` (required): Search term
 
 **Example**: `GET /api/users/search?query=john`
 
 **Success Response** (200 OK):
+
 ```json
 [
   {
@@ -521,6 +572,7 @@ Authorization: Bearer <access_token>
 ```
 
 **Notes**:
+
 - Case-insensitive search
 - Matches partial usernames and emails
 - Returns empty array if no matches
@@ -536,9 +588,11 @@ Authorization: Bearer <access_token>
 **Description**: Updates user's profile information.
 
 **Path Parameters**:
+
 - `id`: User UUID
 
 **Request Body**:
+
 ```json
 {
   "phoneNumber": "+1234567890",
@@ -547,11 +601,13 @@ Authorization: Bearer <access_token>
 ```
 
 **Validation**:
+
 - Both fields are optional
 - `phoneNumber`: Valid phone format
 - `avatarUrl`: Valid URL format
 
 **Success Response** (200 OK):
+
 ```json
 {
   "id": "550e8400-e29b-41d4-a716-446655440000",
@@ -563,6 +619,7 @@ Authorization: Bearer <access_token>
 ```
 
 **Error Responses**:
+
 - `403 Forbidden`: Attempting to update another user's profile
 - `404 Not Found`: User not found
 
@@ -577,9 +634,11 @@ Authorization: Bearer <access_token>
 **Description**: Updates user's online status.
 
 **Path Parameters**:
+
 - `id`: User UUID
 
 **Query Parameters**:
+
 - `status` (required): New status value
 
 **Status Values**: `ONLINE`, `OFFLINE`, `AWAY`, `DO_NOT_DISTURB`
@@ -587,6 +646,7 @@ Authorization: Bearer <access_token>
 **Example**: `PUT /api/users/{id}/status?status=AWAY`
 
 **Success Response** (200 OK):
+
 ```json
 {
   "id": "550e8400-e29b-41d4-a716-446655440000",
@@ -598,6 +658,7 @@ Authorization: Bearer <access_token>
 ```
 
 **Error Responses**:
+
 - `400 Bad Request`: Invalid status value
 - `403 Forbidden`: Attempting to update another user's status
 
@@ -612,6 +673,7 @@ Authorization: Bearer <access_token>
 **Description**: Retrieves all users with ONLINE status.
 
 **Success Response** (200 OK):
+
 ```json
 [
   {
@@ -625,6 +687,7 @@ Authorization: Bearer <access_token>
 ```
 
 **Notes**:
+
 - Useful for contact lists showing online friends
 - Returns empty array if no online users
 
@@ -635,6 +698,7 @@ Authorization: Bearer <access_token>
 ### Authentication DTOs
 
 #### RegisterRequest
+
 ```java
 {
   username: String (3-50 chars, required)
@@ -645,6 +709,7 @@ Authorization: Bearer <access_token>
 ```
 
 #### LoginRequest
+
 ```java
 {
   username: String (required)
@@ -653,6 +718,7 @@ Authorization: Bearer <access_token>
 ```
 
 #### LoginResponse
+
 ```java
 {
   token: String (JWT access token)
@@ -667,6 +733,7 @@ Authorization: Bearer <access_token>
 ```
 
 #### RefreshTokenRequest
+
 ```java
 {
   refreshToken: String (UUID, required)
@@ -674,6 +741,7 @@ Authorization: Bearer <access_token>
 ```
 
 #### TokenRefreshResponse
+
 ```java
 {
   accessToken: String (JWT)
@@ -684,6 +752,7 @@ Authorization: Bearer <access_token>
 ```
 
 #### ChangePasswordRequest
+
 ```java
 {
   currentPassword: String (required)
@@ -692,6 +761,7 @@ Authorization: Bearer <access_token>
 ```
 
 #### ForgotPasswordRequest
+
 ```java
 {
   email: String (valid email, required)
@@ -699,6 +769,7 @@ Authorization: Bearer <access_token>
 ```
 
 #### ResetPasswordRequest
+
 ```java
 {
   token: String (UUID, required)
@@ -707,6 +778,7 @@ Authorization: Bearer <access_token>
 ```
 
 #### VerifyEmailRequest
+
 ```java
 {
   token: String (UUID, required)
@@ -716,6 +788,7 @@ Authorization: Bearer <access_token>
 ### User DTOs
 
 #### UserDto
+
 ```java
 {
   id: UUID
@@ -732,6 +805,7 @@ Authorization: Bearer <access_token>
 ```
 
 #### UpdateProfileRequest
+
 ```java
 {
   phoneNumber: String (optional)
@@ -746,6 +820,7 @@ Authorization: Bearer <access_token>
 ### JWT Token Structure
 
 **Access Token** (Header):
+
 ```json
 {
   "alg": "HS256",
@@ -754,6 +829,7 @@ Authorization: Bearer <access_token>
 ```
 
 **Access Token** (Payload):
+
 ```json
 {
   "sub": "550e8400-e29b-41d4-a716-446655440000",
@@ -765,6 +841,7 @@ Authorization: Bearer <access_token>
 ```
 
 **Token Configuration**:
+
 - Algorithm: HS256 (HMAC with SHA-256)
 - Secret: Configured in `application.yml` (`jwt.secret`)
 - Access Token Expiration: 15 minutes (900 seconds)
@@ -799,6 +876,7 @@ Authorization: Bearer <access_token>
 ### CORS Configuration
 
 **Allowed Origins**:
+
 - `http://localhost:3000` (React development)
 - `http://localhost:5173` (Vite development)
 
@@ -828,23 +906,24 @@ All API errors follow a consistent structure:
 
 ### Common Error Messages
 
-| Error | Status | Message |
-|-------|--------|---------|
-| Invalid credentials | 401 | Invalid username or password |
-| Account locked | 423 | Account locked due to too many failed login attempts |
-| Email not verified | 403 | Email verification required |
-| Token expired | 401 | Access token has expired |
-| Refresh token invalid | 401 | Invalid or expired refresh token |
-| Resource not found | 404 | User not found |
-| Username exists | 409 | Username already exists |
-| Email exists | 409 | Email already exists |
-| Validation failed | 400 | Specific validation error message |
+| Error                 | Status | Message                                              |
+| --------------------- | ------ | ---------------------------------------------------- |
+| Invalid credentials   | 401    | Invalid username or password                         |
+| Account locked        | 423    | Account locked due to too many failed login attempts |
+| Email not verified    | 403    | Email verification required                          |
+| Token expired         | 401    | Access token has expired                             |
+| Refresh token invalid | 401    | Invalid or expired refresh token                     |
+| Resource not found    | 404    | User not found                                       |
+| Username exists       | 409    | Username already exists                              |
+| Email exists          | 409    | Email already exists                                 |
+| Validation failed     | 400    | Specific validation error message                    |
 
 ---
 
 ## Rate Limiting (Future Enhancement)
 
 **Planned Limits**:
+
 - Authentication endpoints: 5 requests/minute per IP
 - Email verification resend: 1 request/minute per email
 - Password reset: 3 requests/hour per IP
@@ -873,6 +952,6 @@ All API errors follow a consistent structure:
 
 ---
 
-*Last Updated: January 2025*  
-*API Version: 1.0*  
-*Base URL: http://localhost:8080/api*
+_Last Updated: January 2025_  
+_API Version: 1.0_  
+_Base URL: http://localhost:8080/api_

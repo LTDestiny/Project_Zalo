@@ -32,7 +32,7 @@ zola-platform (Spring Boot Monolith)
 
 - **Framework**: Spring Boot 3.4.1
 - **Java**: Version 17/21
-- **Databases**: 
+- **Databases**:
   - PostgreSQL 17.4+ (Users, Groups, Friendships, Activities)
   - DynamoDB (Messages, Conversations, Chatbot Sessions)
   - Redis (Caching, Session Management)
@@ -430,7 +430,7 @@ Buckets:
 6. ✅ **COMPLETED**: Enhanced authentication system with 10 endpoints
 7. ✅ **COMPLETED**: Database schema optimization (30+ indexes)
 8. ✅ **COMPLETED**: Sample data generation (20 users, 10 groups, 28 friendships)
-6. ✅ Setup service mesh (Istio/Linkerd)
+9. ✅ Setup service mesh (Istio/Linkerd)
 
 **Deliverables:**
 

@@ -57,72 +57,72 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    
+
     @Column(unique = true, nullable = false, length = 50)
     private String username;
-    
+
     @Column(unique = true, nullable = false, length = 100)
     private String email;
-    
+
     @Column(name = "password_hash", nullable = false)
     private String passwordHash;
-    
+
     // Profile Information
     @Column(name = "phone_number", length = 20)
     private String phoneNumber;
-    
+
     @Column(name = "avatar_url", length = 500)
     private String avatarUrl;
-    
+
     // Status & Role
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
     private UserStatus status = UserStatus.OFFLINE;
-    
+
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
     private UserRole role = UserRole.USER;
-    
+
     // Timestamps
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
-    
+
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-    
+
     @Column(name = "last_seen")
     private LocalDateTime lastSeen;
-    
+
     // Authentication Enhancement Fields
     @Column(name = "email_verified")
     private Boolean emailVerified = false;
-    
+
     @Column(name = "verification_token", length = 500)
     private String verificationToken;
-    
+
     @Column(name = "verification_token_expiry")
     private LocalDateTime verificationTokenExpiry;
-    
+
     @Column(name = "reset_token", length = 500)
     private String resetToken;
-    
+
     @Column(name = "reset_token_expiry")
     private LocalDateTime resetTokenExpiry;
-    
+
     @Column(name = "refresh_token", length = 500)
     private String refreshToken;
-    
+
     @Column(name = "refresh_token_expiry")
     private LocalDateTime refreshTokenExpiry;
-    
+
     @Column(name = "login_attempts")
     private Integer loginAttempts = 0;
-    
+
     @Column(name = "locked_until")
     private LocalDateTime lockedUntil;
-    
+
     // Methods
     public boolean isAccountLocked();
     public void incrementLoginAttempts();
@@ -130,6 +130,7 @@ public class User {
 ```
 
 **Enums Used**:
+
 - `UserStatus`: ONLINE, OFFLINE, AWAY, DO_NOT_DISTURB
 - `UserRole`: USER, ADMIN
 
@@ -148,21 +149,21 @@ public class Friendship {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    
+
     @Column(name = "user_id_1", nullable = false)
     private UUID userId1;
-    
+
     @Column(name = "user_id_2", nullable = false)
     private UUID userId2;
-    
+
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
     private FriendshipStatus status = FriendshipStatus.PENDING;
-    
+
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
-    
+
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
@@ -186,18 +187,18 @@ public class UserActivity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    
+
     @Column(name = "user_id", nullable = false)
     private UUID userId;
-    
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 50)
     private ActivityType type;
-    
+
     @Type(JsonBinaryType.class)
     @Column(columnDefinition = "jsonb")
     private Map<String, Object> metadata;
-    
+
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -223,27 +224,27 @@ public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    
+
     @Column(nullable = false, length = 100)
     private String name;
-    
+
     @Column(columnDefinition = "TEXT")
     private String description;
-    
+
     @Column(name = "avatar_url", length = 500)
     private String avatarUrl;
-    
+
     @Column(name = "created_by", nullable = false)
     private UUID createdBy;
-    
+
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
     private GroupType type = GroupType.PRIVATE;
-    
+
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
-    
+
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
@@ -267,21 +268,21 @@ public class GroupMember {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    
+
     @Column(name = "group_id", nullable = false)
     private UUID groupId;
-    
+
     @Column(name = "user_id", nullable = false)
     private UUID userId;
-    
+
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
     private MemberRole role = MemberRole.MEMBER;
-    
+
     @CreationTimestamp
     @Column(name = "joined_at", nullable = false, updatable = false)
     private LocalDateTime joinedAt;
-    
+
     @Column(name = "last_read_at")
     private LocalDateTime lastReadAt;
 }
@@ -302,15 +303,15 @@ public class RegisterRequest {
     @NotBlank(message = "Username is required")
     @Size(min = 3, max = 50, message = "Username must be 3-50 characters")
     private String username;
-    
+
     @NotBlank(message = "Email is required")
     @Email(message = "Invalid email format")
     private String email;
-    
+
     @NotBlank(message = "Password is required")
     @Size(min = 8, message = "Password must be at least 8 characters")
     private String password;
-    
+
     @Pattern(regexp = "^\\+?[1-9]\\d{1,14}$", message = "Invalid phone number")
     private String phoneNumber;
 }
@@ -324,7 +325,7 @@ public class RegisterRequest {
 public class LoginRequest {
     @NotBlank(message = "Username is required")
     private String username;
-    
+
     @NotBlank(message = "Password is required")
     private String password;
 }
@@ -379,7 +380,7 @@ public class TokenRefreshResponse {
 public class ChangePasswordRequest {
     @NotBlank(message = "Current password is required")
     private String currentPassword;
-    
+
     @NotBlank(message = "New password is required")
     @Size(min = 8, message = "Password must be at least 8 characters")
     private String newPassword;
@@ -406,7 +407,7 @@ public class ForgotPasswordRequest {
 public class ResetPasswordRequest {
     @NotBlank(message = "Token is required")
     private String token;
-    
+
     @NotBlank(message = "New password is required")
     @Size(min = 8, message = "Password must be at least 8 characters")
     private String newPassword;
@@ -454,7 +455,7 @@ public class UserDto {
 public class UpdateProfileRequest {
     @Pattern(regexp = "^\\+?[1-9]\\d{1,14}$", message = "Invalid phone number")
     private String phoneNumber;
-    
+
     @URL(message = "Invalid URL format")
     private String avatarUrl;
 }
@@ -477,22 +478,22 @@ public class AuthService {
     UserDto register(RegisterRequest request);
     LoginResponse login(LoginRequest request);
     void logout(String userId);
-    
+
     // Current User
     UserDto getCurrentUser(String userId);
-    
+
     // Token Management
     TokenRefreshResponse refreshToken(RefreshTokenRequest request);
-    
+
     // Password Management
     void changePassword(String userId, ChangePasswordRequest request);
     void forgotPassword(ForgotPasswordRequest request);
     void resetPassword(ResetPasswordRequest request);
-    
+
     // Email Verification
     void verifyEmail(VerifyEmailRequest request);
     void resendVerificationEmail(String email);
-    
+
     // Security Helpers
     private void handleFailedLogin(User user);
     private void validateRefreshToken(String token);
@@ -500,12 +501,14 @@ public class AuthService {
 ```
 
 **Dependencies**:
+
 - `UserRepository`: Data access
 - `PasswordEncoder`: BCrypt password hashing
 - `JwtTokenProvider`: JWT token generation/validation
 - `EmailService`: (Future) Sending verification/reset emails
 
 **Configuration**:
+
 - `max-login-attempts`: 5 (configurable via `application.yml`)
 - `lock-duration-minutes`: 15 (configurable)
 
@@ -526,17 +529,18 @@ public class UserService {
     List<UserDto> findAll();
     List<UserDto> searchUsers(String query);
     List<UserDto> findByStatus(UserStatus status);
-    
+
     // Updates
     UserDto updateUserProfile(UUID id, UpdateProfileRequest request);
     UserDto updateUserStatus(UUID id, UserStatus status);
-    
+
     // Helpers
     private UserDto convertToDto(User user);
 }
 ```
 
 **Dependencies**:
+
 - `UserRepository`: Data access
 
 ---
@@ -556,12 +560,12 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     Optional<User> findByUsername(String username);
     Optional<User> findByEmail(String email);
     List<User> findByStatus(UserStatus status);
-    
+
     // Authentication Queries
     Optional<User> findByResetToken(String resetToken);
     Optional<User> findByVerificationToken(String verificationToken);
     Optional<User> findByRefreshToken(String refreshToken);
-    
+
     // Search Queries
     @Query("SELECT u FROM User u WHERE LOWER(u.username) LIKE LOWER(CONCAT('%', :query, '%')) " +
            "OR LOWER(u.email) LIKE LOWER(CONCAT('%', :query, '%'))")
@@ -584,32 +588,33 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 public class JwtTokenProvider {
     @Value("${jwt.secret}")
     private String jwtSecret;
-    
+
     @Value("${jwt.expiration}")
     private long jwtExpirationMs;
-    
+
     @Value("${jwt.refresh-expiration}")
     private long refreshExpirationMs;
-    
+
     // Token Generation
     String generateToken(String userId);
     String generateRefreshToken();
-    
+
     // Token Validation
     boolean validateToken(String token);
     String getUserIdFromToken(String token);
-    
+
     // Helpers
     private String generateTokenWithExpiration(String userId, long expiration);
 }
 ```
 
 **Configuration** (`application.yml`):
+
 ```yaml
 jwt:
   secret: your-secret-key-here
-  expiration: 900000        # 15 minutes
-  refresh-expiration: 2592000000  # 30 days
+  expiration: 900000 # 15 minutes
+  refresh-expiration: 2592000000 # 30 days
 ```
 
 ---
@@ -626,16 +631,17 @@ jwt:
 public class SecurityConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http);
-    
+
     @Bean
     PasswordEncoder passwordEncoder();  // BCrypt with strength 10
-    
+
     @Bean
     AuthenticationManager authenticationManager(AuthenticationConfiguration config);
 }
 ```
 
 **Security Rules**:
+
 - Public endpoints: `/api/auth/register`, `/api/auth/login`, `/api/auth/forgot-password`, `/api/auth/reset-password`, `/api/auth/verify-email`, `/api/auth/refresh-token`
 - Authenticated endpoints: All other `/api/**` endpoints
 - WebSocket: `/ws/**` (requires authentication)
@@ -657,31 +663,31 @@ public class SecurityConfig {
 public class AuthController {
     @PostMapping("/register")
     ResponseEntity<UserDto> register(@Valid @RequestBody RegisterRequest request);
-    
+
     @PostMapping("/login")
     ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request);
-    
+
     @PostMapping("/logout")
     ResponseEntity<Map<String, String>> logout();
-    
+
     @GetMapping("/me")
     ResponseEntity<UserDto> getCurrentUser();
-    
+
     @PostMapping("/refresh-token")
     ResponseEntity<TokenRefreshResponse> refreshToken(@Valid @RequestBody RefreshTokenRequest request);
-    
+
     @PostMapping("/change-password")
     ResponseEntity<Map<String, String>> changePassword(@Valid @RequestBody ChangePasswordRequest request);
-    
+
     @PostMapping("/forgot-password")
     ResponseEntity<Map<String, String>> forgotPassword(@Valid @RequestBody ForgotPasswordRequest request);
-    
+
     @PostMapping("/reset-password")
     ResponseEntity<Map<String, String>> resetPassword(@Valid @RequestBody ResetPasswordRequest request);
-    
+
     @PostMapping("/verify-email")
     ResponseEntity<Map<String, String>> verifyEmail(@Valid @RequestBody VerifyEmailRequest request);
-    
+
     @PostMapping("/resend-verification")
     ResponseEntity<Map<String, String>> resendVerification(@RequestParam String email);
 }
@@ -702,24 +708,24 @@ public class AuthController {
 public class UserController {
     @GetMapping("/{id}")
     ResponseEntity<UserDto> getUserById(@PathVariable UUID id);
-    
+
     @GetMapping("/username/{username}")
     ResponseEntity<UserDto> getUserByUsername(@PathVariable String username);
-    
+
     @GetMapping
     ResponseEntity<List<UserDto>> getAllUsers();
-    
+
     @GetMapping("/search")
     ResponseEntity<List<UserDto>> searchUsers(@RequestParam String query);
-    
+
     @PutMapping("/{id}/profile")
-    ResponseEntity<UserDto> updateProfile(@PathVariable UUID id, 
+    ResponseEntity<UserDto> updateProfile(@PathVariable UUID id,
                                           @Valid @RequestBody UpdateProfileRequest request);
-    
+
     @PutMapping("/{id}/status")
-    ResponseEntity<UserDto> updateStatus(@PathVariable UUID id, 
+    ResponseEntity<UserDto> updateStatus(@PathVariable UUID id,
                                          @RequestParam UserStatus status);
-    
+
     @GetMapping("/online")
     ResponseEntity<List<UserDto>> getOnlineUsers();
 }
@@ -740,13 +746,13 @@ public class UserController {
 public class GlobalExceptionHandler {
     @ExceptionHandler(ResourceNotFoundException.class)
     ResponseEntity<ErrorResponse> handleResourceNotFound(ResourceNotFoundException ex);
-    
+
     @ExceptionHandler(UnauthorizedException.class)
     ResponseEntity<ErrorResponse> handleUnauthorized(UnauthorizedException ex);
-    
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     ResponseEntity<ErrorResponse> handleValidationErrors(MethodArgumentNotValidException ex);
-    
+
     @ExceptionHandler(Exception.class)
     ResponseEntity<ErrorResponse> handleGenericException(Exception ex);
 }
@@ -803,6 +809,7 @@ public class CorsConfig implements WebMvcConfigurer {
 ```
 
 **Allowed Origins**:
+
 - `http://localhost:3000` (React)
 - `http://localhost:5173` (Vite)
 
@@ -821,6 +828,7 @@ public class S3Config {
 ```
 
 **S3 Buckets**:
+
 - `zola-user-avatars`: User profile pictures
 - `zola-message-attachments`: Message attachments
 - `zola-shared-files`: Group shared files
@@ -856,6 +864,7 @@ public class DynamoDBConfig {
 ```
 
 **DynamoDB Tables**:
+
 - `Messages`: Chat messages
 - `Conversations`: Conversation metadata
 
@@ -965,7 +974,7 @@ classDiagram
         +isAccountLocked() boolean
         +incrementLoginAttempts() void
     }
-    
+
     class Friendship {
         +UUID id
         +UUID userId1
@@ -974,7 +983,7 @@ classDiagram
         +LocalDateTime createdAt
         +LocalDateTime updatedAt
     }
-    
+
     class UserActivity {
         +UUID id
         +UUID userId
@@ -982,7 +991,7 @@ classDiagram
         +Map metadata
         +LocalDateTime createdAt
     }
-    
+
     class Group {
         +UUID id
         +String name
@@ -993,7 +1002,7 @@ classDiagram
         +LocalDateTime createdAt
         +LocalDateTime updatedAt
     }
-    
+
     class GroupMember {
         +UUID id
         +UUID groupId
@@ -1002,7 +1011,7 @@ classDiagram
         +LocalDateTime joinedAt
         +LocalDateTime lastReadAt
     }
-    
+
     %% DTOs
     class RegisterRequest {
         +String username
@@ -1010,12 +1019,12 @@ classDiagram
         +String password
         +String phoneNumber
     }
-    
+
     class LoginRequest {
         +String username
         +String password
     }
-    
+
     class LoginResponse {
         +String token
         +String refreshToken
@@ -1026,7 +1035,7 @@ classDiagram
         +String role
         +Long expiresIn
     }
-    
+
     class UserDto {
         +UUID id
         +String username
@@ -1039,7 +1048,7 @@ classDiagram
         +LocalDateTime updatedAt
         +LocalDateTime lastSeen
     }
-    
+
     %% Services
     class AuthService {
         +register(RegisterRequest) UserDto
@@ -1053,7 +1062,7 @@ classDiagram
         +verifyEmail(VerifyEmailRequest) void
         +resendVerificationEmail(String) void
     }
-    
+
     class UserService {
         +findById(UUID) UserDto
         +findByUsername(String) UserDto
@@ -1063,7 +1072,7 @@ classDiagram
         +updateUserProfile(UUID, UpdateProfileRequest) UserDto
         +updateUserStatus(UUID, UserStatus) UserDto
     }
-    
+
     %% Controllers
     class AuthController {
         +register(RegisterRequest) ResponseEntity
@@ -1076,7 +1085,7 @@ classDiagram
         +resetPassword(ResetPasswordRequest) ResponseEntity
         +verifyEmail(VerifyEmailRequest) ResponseEntity
     }
-    
+
     class UserController {
         +getUserById(UUID) ResponseEntity
         +getUserByUsername(String) ResponseEntity
@@ -1086,7 +1095,7 @@ classDiagram
         +updateStatus(UUID, UserStatus) ResponseEntity
         +getOnlineUsers() ResponseEntity
     }
-    
+
     %% Security
     class JwtTokenProvider {
         -String jwtSecret
@@ -1097,7 +1106,7 @@ classDiagram
         +validateToken(String) boolean
         +getUserIdFromToken(String) String
     }
-    
+
     %% Repositories
     class UserRepository {
         <<interface>>
@@ -1109,20 +1118,20 @@ classDiagram
         +findByRefreshToken(String) Optional~User~
         +searchUsers(String) List~User~
     }
-    
+
     %% Relationships
     User "1" --> "0..*" Friendship : has
     User "1" --> "0..*" UserActivity : performs
     User "1" --> "0..*" Group : creates
     User "1" --> "0..*" GroupMember : joins
     Group "1" --> "0..*" GroupMember : has
-    
+
     AuthController --> AuthService : uses
     UserController --> UserService : uses
     AuthService --> UserRepository : uses
     UserService --> UserRepository : uses
     AuthService --> JwtTokenProvider : uses
-    
+
     AuthController ..> RegisterRequest : receives
     AuthController ..> LoginRequest : receives
     AuthController ..> LoginResponse : returns
@@ -1134,31 +1143,37 @@ classDiagram
 ## Design Patterns Used
 
 ### 1. Layered Architecture
+
 - **Presentation Layer**: Controllers (REST endpoints)
 - **Application Layer**: Services (business logic)
 - **Domain Layer**: Entities, Enums (core domain models)
 - **Infrastructure Layer**: Repositories (data access)
 
 ### 2. Repository Pattern
+
 - Abstraction over data access
 - Spring Data JPA repositories
 - Clean separation of persistence logic
 
 ### 3. Data Transfer Object (DTO)
+
 - Separate DTOs for requests and responses
 - Prevents exposure of entity internals
 - Validation at DTO level
 
 ### 4. Dependency Injection
+
 - Constructor-based injection (`@RequiredArgsConstructor`)
 - Loose coupling between layers
 - Testability
 
 ### 5. Builder Pattern
+
 - Entity creation with Lombok `@Builder`
 - Readable and maintainable object construction
 
 ### 6. Strategy Pattern
+
 - Different authentication strategies (email, username)
 - Token refresh mechanism
 - Password reset flow
@@ -1167,13 +1182,13 @@ classDiagram
 
 ## Validation Annotations
 
-| Annotation | Purpose | Example |
-|------------|---------|---------|
-| `@NotBlank` | Field cannot be null or empty | Username, password |
-| `@Email` | Valid email format | Email address |
-| `@Size` | String length constraints | Password (min 8), username (3-50) |
-| `@Pattern` | Regex validation | Phone number format |
-| `@URL` | Valid URL format | Avatar URL |
+| Annotation  | Purpose                       | Example                           |
+| ----------- | ----------------------------- | --------------------------------- |
+| `@NotBlank` | Field cannot be null or empty | Username, password                |
+| `@Email`    | Valid email format            | Email address                     |
+| `@Size`     | String length constraints     | Password (min 8), username (3-50) |
+| `@Pattern`  | Regex validation              | Phone number format               |
+| `@URL`      | Valid URL format              | Avatar URL                        |
 
 ---
 
@@ -1186,6 +1201,6 @@ classDiagram
 
 ---
 
-*Last Updated: January 2025*  
-*Framework: Spring Boot 3.4.1*  
-*Java Version: 17/21*
+_Last Updated: January 2025_  
+_Framework: Spring Boot 3.4.1_  
+_Java Version: 17/21_
