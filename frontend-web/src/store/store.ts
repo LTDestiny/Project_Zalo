@@ -3,12 +3,14 @@ import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
 import authReducer from "./authSlice";
 import chatReducer from "./chatSlice";
 import groupReducer from "./groupSlice";
+import analyticsReducer from "./analyticsSlice";
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     chat: chatReducer,
     group: groupReducer,
+    analytics: analyticsReducer,
   },
 });
 
