@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchDashboards, setFilter } from '@/store/analyticsSlice';
+import { fetchDashboards } from '@/store/analyticsSlice';
 import { RootState, AppDispatch } from '@/store/store';
 import { AnalyticsFilter } from '@/types/analytics.types';
 import {
-  BarChart,
-  Bar,
   LineChart,
   Line,
   PieChart,
@@ -159,49 +157,26 @@ const AnalyticsDashboard: React.FC = () => {
         </div>
       </div>
 
-      {/* Navigation Links */}
+      {/* Quick Links */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <NavLink label="Messages" href="/analytics/messages" icon="💬" />
-        <NavLink label="Users" href="/analytics/users" icon="👥" />
-        <NavLink label="Groups" href="/analytics/groups" icon="👫" />
-        <NavLink label="Calls" href="/analytics/calls" icon="☎️" />
+        {[
+          { label: 'Messages', href: '/analytics/messages', icon: '💬' },
+          { label: 'Users', href: '/analytics/users', icon: '👥' },
+          { label: 'Groups', href: '/analytics/groups', icon: '👫' },
+          { label: 'Calls', href: '/analytics/calls', icon: '☎️' },
+        ].map((item) => (
+          <a
+            key={item.href}
+            href={item.href}
+            className="bg-white rounded-lg shadow p-4 text-center hover:shadow-lg transition cursor-pointer"
+          >
+            <p className="text-2xl mb-2">{item.icon}</p>
+            <p className="text-gray-900 font-medium">{item.label}</p>
+          </a>
+        ))}
       </div>
     </div>
   );
 };
-
-const StatCard: React.FC<{
-  label: string;
-  value: string;
-  change: number;
-  icon: string;
-}> = ({ label, value, change, icon }) => (
-  <div className="bg-white rounded-lg shadow p-6">
-    <div className="flex justify-between items-start">
-      <div>
-        <p className="text-gray-600 text-sm font-medium">{label}</p>
-        <p className="text-2xl font-bold text-gray-900 mt-2">{value}</p>
-        <p className={`text-sm mt-2 ${change >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-          {change >= 0 ? '+' : ''}{change}%
-        </p>
-      </div>
-      <span className="text-3xl">{icon}</span>
-    </div>
-  </div>
-);
-
-const NavLink: React.FC<{ label: string; href: string; icon: string }> = ({
-  label,
-  href,
-  icon,
-}) => (
-  <a
-    href={href}
-    className="bg-white rounded-lg shadow p-4 text-center hover:shadow-lg transition cursor-pointer"
-  >
-    <p className="text-2xl mb-2">{icon}</p>
-    <p className="text-gray-900 font-medium">{label}</p>
-  </a>
-);
 
 export default AnalyticsDashboard;

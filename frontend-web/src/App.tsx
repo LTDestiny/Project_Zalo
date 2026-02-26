@@ -15,6 +15,12 @@ import { ChangePasswordForm } from "./components/auth/ChangePasswordForm";
 import { HomePage } from "./components/home/HomePage";
 import { ChatLayout } from "./components/chat/ChatLayout";
 import { SettingsLayout } from "./components/settings/SettingsLayout";
+import AnalyticsLayout from "./components/analytics/AnalyticsLayout";
+import AnalyticsDashboard from "./components/analytics/AnalyticsDashboard";
+import MessageAnalytics from "./components/analytics/MessageAnalytics";
+import UserAnalytics from "./components/analytics/UserAnalytics";
+import GroupAnalytics from "./components/analytics/GroupAnalytics";
+import CallAnalytics from "./components/analytics/CallAnalytics";
 import "./index.css";
 
 // Protected Route Component
@@ -75,6 +81,13 @@ function App() {
             }
           />
           <Route path="*" element={<Navigate to="/" replace />} />
+
+          {/* Analytics Routes */}
+          <Route path="/analytics" element={<AnalyticsLayout><AnalyticsDashboard /></AnalyticsLayout>} />
+          <Route path="/analytics/messages" element={<AnalyticsLayout><MessageAnalytics /></AnalyticsLayout>} />
+          <Route path="/analytics/users" element={<AnalyticsLayout><UserAnalytics /></AnalyticsLayout>} />
+          <Route path="/analytics/groups" element={<AnalyticsLayout><GroupAnalytics /></AnalyticsLayout>} />
+          <Route path="/analytics/calls" element={<AnalyticsLayout><CallAnalytics /></AnalyticsLayout>} />
         </Routes>
       </Router>
     </Provider>
